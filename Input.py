@@ -7,34 +7,50 @@ import sys
 
 class Input:
 
-	def __init__(self):
-		pass
+	def __init__(self, playerHandlerObj, minionHandlerObj, screenObj):
+		self.playerHandlerObj = playerHandlerObj
+		self.minionHandlerObj = minionHandlerObj
+		self.screenObj = screenObj
 		
-	def update(self, playerObj):
+	def update(self):
 		""" Input event handler """
 		for event in pygame.event.get():
 			if event.type == KEYDOWN:
 				if event.key == K_LEFT:
-					playerObj.moveLeft= True
-					playerObj.direction = 'left'
+					self.playerHandlerObj.move("LEFT")
 				elif event.key == K_RIGHT:
-					playerObj.moveRight= True
-					playerObj.direction = 'right'
+					self.playerHandlerObj.move("RIGHT")
 				elif event.key == K_DOWN:
-					playerObj.moveDown= True
-					playerObj.direction = 'down'
+					self.playerHandlerObj.move("DOWN")
 				elif event.key == K_UP:
-					playerObj.moveUp= True
-					playerObj.direction = 'up'
+					self.playerHandlerObj.move("UP")
+				elif event.key == K_a and self.screenObj.canScroll("LEFT"):
+					self.screenObj.scroll("LEFT");
+					self.playerHandlerObj.scroll("LEFT")
+					self.minionHandlerObj.scroll("LEFT")
+				elif event.key == K_s and self.screenObj.canScroll("DOWN"): 
+					self.screenObj.scroll("DOWN");
+					self.playerHandlerObj.scroll("DOWN")
+					self.minionHandlerObj.scroll("DOWN")
+				elif event.key == K_d and self.screenObj.canScroll("RIGHT"):
+					self.screenObj.scroll("RIGHT");
+					self.playerHandlerObj.scroll("RIGHT")
+					self.minionHandlerObj.scroll("RIGHT")
+				elif event.key == K_w and self.screenObj.canScroll("UP"):
+					self.screenObj.scroll("UP");
+					self.playerHandlerObj.scroll("UP")
+					self.minionHandlerObj.scroll("UP")
 				if event.key == K_ESCAPE:
 					return True
 			elif event.type == KEYUP: # stop moving the player
+				'''
 				if event.key == K_LEFT:
-					playerObj.moveLeft= False
+					self.playerHandlerObj.moveLeft= False
 				if event.key == K_RIGHT:
-					playerObj.moveRight= False
+					self.playerHandlerObj.moveRight= False
 				if event.key == K_DOWN:
-					playerObj.moveDown= False
+					self.playerHandlerObj.moveDown= False
 				if event.key == K_UP:
-					playerObj.moveUp= False
+					self.playerHandlerObj.moveUp= False
+				'''
 		return False

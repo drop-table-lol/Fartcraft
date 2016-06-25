@@ -5,11 +5,12 @@ import Display
 import Grid
 import Input
 import Player
+import Minion
 
 class Game:
 	def __init__(self):
 		pygame.init()
-
+		
 	def run(self):
 		# Run the game
 		gameNotOver = True
@@ -18,21 +19,25 @@ class Game:
 
 	def runGame(self):
 		gridObj = Grid.Grid()
-		inputObj = Input.Input()
+		
 		
 		screenObj = Display.Screen(gridObj)
-		playerObj = Player.Player(screenObj, gridObj)
+		playerHandlerObj = Player.PlayerHandler(gridObj, screenObj)
+		minionHandlerObj = Minion.MinionHandler(playerHandlerObj, gridObj, screenObj, 1)
+		inputObj = Input.Input(playerHandlerObj, minionHandlerObj, screenObj)
+		
 		endGame = False
 		while not endGame:
-			endGame = inputObj.update(playerObj)
+			endGame = inputObj.update()
 			screenObj.update()
 			
 			gridObj.update()
-			playerObj.update()
-			
+			playerHandlerObj.update()
+			minionHandlerObj.update()
 			pygame.display.update()
 			Display.FPSCLOCK.tick(Display.FPS)
-			
+	
+
  
 if __name__ == '__main__':
 	""" For non-networked gameplay """

@@ -5,10 +5,11 @@ spr_player = pygame.image.load('spr_player.png')
 
 class Player:
 	
-	def __init__(self, screenObj, gridObj):
-		self.x = 0
-		self.y = 0
-		
+	def __init__(self, screenObj, gridObj, x, y, sprite):
+		self.x = x
+		self.y = y
+		self.screenX = x
+		self.screenY = y
 		self.gridObj = gridObj
 		self.screenObj = screenObj
 		self.size = Display.TILE_SIZE
@@ -17,40 +18,80 @@ class Player:
 		self.moveDown = False
 		self.moveLeft = False
 		self.moveRight = False
-		self.direction = 'right'
-		self.color = (249, 66, 4)
-		self.sprite = spr_player
+		self.sprite = sprite
 	
 	def update(self):
-		self.movePlayer()
+		self.move()
 		self.draw()
 		
 	def draw(self):
+		self.updateRect()
 		Display.CANVAS.blit(self.sprite, self.rect)
 	
 	def updateRect(self):
-		self.rect = pygame.Rect(self.x*Display.TILE_SIZE, self.y*Display.TILE_SIZE, self.size, self.size)
+		self.rect = pygame.Rect(self.screenX*Display.TILE_SIZE, self.screenY*Display.TILE_SIZE, self.size, self.size)
 	
-	def movePlayer(self):
+	def move(self):
 		if self.moveUp or self.moveDown or self.moveLeft or self.moveRight:	
-			if self.moveUp and self.y - 1 >= 0 and self.gridObj.tileIsWalkable(self.x, self.y - 1):
+			if self.moveUp:
 				self.y -= 1
+				self.screenY -= 1
 				self.moveUp = False
-				if self.y - 1 == 0:
-					self.screenObj.scroll("UP")
-			elif self.moveDown and self.y < Display.HEIGHT_TILES - 1 and self.gridObj.tileIsWalkable(self.x, self.y + 1):
+			elif self.moveDown:
 				self.y += 1
+				self.screenY += 1
 				self.moveDown = False
-				if self.y + 1 == Display.SCREEN_LENGTH - 1:
-					self.screenObj.scroll("DOWN")
-			elif self.moveLeft and self.x - 1 >= 0 and self.gridObj.tileIsWalkable(self.x - 1, self.y):
+			elif self.moveLeft:
 				self.x -= 1
+				self.screenX -= 1
 				self.moveLeft = False
-				if self.x - 1 == 0:
-					self.screenObj.scroll("LEFT")
-			elif self.moveRight and self.x < Display.WIDTH_TILES - 1 and self.gridObj.tileIsWalkable(self.x + 1, self.y):
+			elif self.moveRight:
 				self.x += 1
+				self.screenX += 1
 				self.moveRight = False
-				if self.x + 1 == Display.SCREEN_WIDTH - 1:
-					self.screenObj.scroll("RIGHT")
-			self.updateRect()
+				
+class PlayerHandler:
+	def __init__(self, gridObj, screenObj):
+		self.playerObj = Player(screenObj, gridObj, 0, 0, spr_player)
+		self.gridObj = gridObj
+		self.screenObj = screenObj
+		self.playerHasMoved = False
+		
+	
+	def update(self):
+		self.playerObj.update()
+			
+	def move(self, direction):
+		if direction == "UP" and self.playerObj.y - 1 >= 0 and self.gridObj.tileIsWalkable(self.playerObj.x, self.playerObj.y - 1):
+			self.playerObj.moveUp = True
+		elif direction == "DOWN" and self.playerObj.y < Display.HEIGHT_TILES - 1 and self.gridObj.tileIsWalkable(self.playerObj.x, self.playerObj.y + 1):
+			self.playerObj.moveDown = True
+		elif direction == "LEFT" and self.playerObj.x - 1 >= 0 and self.gridObj.tileIsWalkable(self.playerObj.x - 1, self.playerObj.y):
+			self.playerObj.moveLeft = True
+		elif direction == "RIGHT" and self.playerObj.x < Display.WIDTH_TILES - 1 and self.gridObj.tileIsWalkable(self.playerObj.x + 1, self.playerObj.y):
+			self.playerObj.moveRight = True
+		else:
+			return False
+		self.playerHasMoved = True
+		return True
+	
+	def scroll(self, direction):
+		if direction == "UP":
+			self.playerObj.screenY += 1
+		if direction == "DOWN":
+			self.playerObj.screenY -= 1
+		if direction == "LEFT":
+			self.playerObj.screenX += 1
+		if direction == "RIGHT":
+			self.playerObj.screenX -= 1
+	
+	def returnPlayerObj(self):
+		return self.playerObj
+	
+	def returnPlayerHasMoved(self):
+		if self.playerHasMoved:
+			self.playerHasMoved = False
+			return True
+		else:
+			return False
+			
