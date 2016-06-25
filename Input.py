@@ -10,7 +10,7 @@ class Input:
 	def __init__(self):
 		pass
 		
-	def update(self, playerObj):
+	def update(self, playerObj, displayObj):
 		""" Input event handler """
 		for event in pygame.event.get():
 			if event.type == KEYDOWN:
@@ -26,6 +26,18 @@ class Input:
 				elif event.key == K_UP:
 					playerObj.moveUp= True
 					playerObj.direction = 'up'
+				elif event.key == K_a and displayObj.canScroll("LEFT"):
+					displayObj.scroll("LEFT");
+					playerObj.screenX += 1
+				elif event.key == K_s and displayObj.canScroll("DOWN"): 
+					displayObj.scroll("DOWN");
+					playerObj.screenY -= 1
+				elif event.key == K_d and displayObj.canScroll("RIGHT"):
+					displayObj.scroll("RIGHT");
+					playerObj.screenX -= 1
+				elif event.key == K_w and displayObj.canScroll("UP"):
+					displayObj.scroll("UP");
+					playerObj.screenY += 1
 				if event.key == K_ESCAPE:
 					return True
 			elif event.type == KEYUP: # stop moving the player

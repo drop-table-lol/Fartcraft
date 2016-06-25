@@ -46,17 +46,28 @@ class Screen:
 		self.gridObj.draw(self.x, self.y, self.x + self.width, self.y + self.height)
 	
 	def scroll(self, direction):
-		# TODO: Fix later
-		return
-		print "XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-		if direction == "UP":
+		print "Scrolling..."
+		if direction == "UP" and self.y  - 1>= 0:
 			self.y -= 1
-		elif direction == "DOWN":
+		elif direction == "DOWN"and self.y + self.height <= self.gridObj.lengthTiles - 1:
 			self.y += 1
-		elif direction == "RIGHT":
+		elif direction == "RIGHT"and self.x + self.width <= self.gridObj.widthTiles - 1:
 			self.x += 1
-		elif direction == "LEFT":
+		elif direction == "LEFT"and self.x - 1 >= 0:
 			self.x -= 1
+		
+			
+	def canScroll(self, direction):
+		if(direction == "UP" and self.y  - 1 >= 0 or
+		direction == "DOWN"and self.y + self.height <= self.gridObj.lengthTiles - 1 or
+		direction == "RIGHT"and self.x + self.width <= self.gridObj.widthTiles - 1 or
+		direction == "LEFT"and self.x - 1 >= 0):
+			return True
+		else:
+			return False
+			
+			
+			
 		
 def returnRandomColor():
 	randNum = random.randint(0, len(ALL_COLORS) - 1)
