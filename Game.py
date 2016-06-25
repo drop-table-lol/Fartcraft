@@ -5,6 +5,7 @@ import Display
 import Grid
 import Input
 import Player
+import Minion
 
 class Game:
 	def __init__(self):
@@ -21,17 +22,18 @@ class Game:
 		
 		
 		screenObj = Display.Screen(gridObj)
-		playerObj = Player.Player(screenObj, gridObj)
-		inputObj = Input.Input()
+		playerHandlerObj = Player.PlayerHandler(gridObj, screenObj)
+		minionHandlerObj = Minion.MinionHandler(playerHandlerObj, gridObj, screenObj, 1)
+		inputObj = Input.Input(playerHandlerObj, minionHandlerObj, screenObj)
 		
 		endGame = False
 		while not endGame:
-			endGame = inputObj.update(playerObj, screenObj)
+			endGame = inputObj.update()
 			screenObj.update()
 			
 			gridObj.update()
-			playerObj.update()
-			
+			playerHandlerObj.update()
+			minionHandlerObj.update()
 			pygame.display.update()
 			Display.FPSCLOCK.tick(Display.FPS)
 	

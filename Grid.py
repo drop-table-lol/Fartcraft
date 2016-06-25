@@ -10,8 +10,8 @@ spr_wall = pygame.image.load('spr_wall.png')
 
 class Grid:
 	def __init__(self):
-		self.lengthTiles = 20
-		self.widthTiles = 20
+		self.lengthTiles = 50
+		self.widthTiles = 50
 		self.grid = []
 		self.initialize()
 		
