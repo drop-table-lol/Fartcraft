@@ -1,8 +1,9 @@
 import pygame
-import Display
+from Displays import Display
 import random
+import Sprites
 
-spr_minion = pygame.image.load('spr_minion.png')
+
 
 class Minion:
 	
@@ -60,7 +61,7 @@ class MinionHandler:
 		self.screenObj = screenObj
 		self.listMinions = []
 		for x in range(numMinions):
-			self.listMinions.append(Minion(screenObj, gridObj, 3, 3, spr_minion))
+			self.listMinions.append(Minion(screenObj, gridObj, 3, 3, Sprites.spr_minion))
 	
 	def update(self):
 		for minion in self.listMinions:
@@ -71,11 +72,11 @@ class MinionHandler:
 	def move(self, minion, direction):
 		if direction == "UP" and minion.y - 1 >= 0 and self.gridObj.tileIsWalkable(minion.x, minion.y - 1):
 			minion.moveUp = True
-		elif direction == "DOWN" and minion.y < Display.HEIGHT_TILES - 1 and self.gridObj.tileIsWalkable(minion.x, minion.y + 1):
+		elif direction == "DOWN" and minion.y < self.gridObj.lengthTiles - 1 and self.gridObj.tileIsWalkable(minion.x, minion.y + 1):
 			minion.moveDown = True
 		elif direction == "LEFT" and minion.x - 1 >= 0 and self.gridObj.tileIsWalkable(minion.x - 1, minion.y):
 			minion.moveLeft = True
-		elif direction == "RIGHT" and minion.x < Display.WIDTH_TILES - 1 and self.gridObj.tileIsWalkable(minion.x + 1, minion.y):
+		elif direction == "RIGHT" and minion.x < self.gridObj.widthTiles - 1 and self.gridObj.tileIsWalkable(minion.x + 1, minion.y):
 			minion.moveRight = True
 		else:
 			return False

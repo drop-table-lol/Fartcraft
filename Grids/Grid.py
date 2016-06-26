@@ -1,12 +1,8 @@
 import pygame
-import Display
+from Displays import Display
 import random
+import Sprites
 
-spr_ground1 = pygame.image.load('spr_ground1.png')
-spr_ground2 = pygame.image.load('spr_ground2.png')
-spr_ground3 = pygame.image.load('spr_ground3.png')
-GROUND_SPRITES = [spr_ground1, spr_ground2, spr_ground3]
-spr_wall = pygame.image.load('spr_wall.png')
 
 class Grid:
 	def __init__(self):
@@ -24,10 +20,10 @@ class Grid:
 			#self.grid.append([])
 			tempList = []
 			for y in xrange(0, self.lengthTiles):
-				if random.randint(0, 3) > 0 or (x == 0 and y == 0) or (x == 1 and y == 0) or (x == 0 and y == 1):
-					tempList.append(Tile(GROUND_SPRITES[random.randint(0, len(GROUND_SPRITES) - 1)], x, y, True))
-				else:
-					tempList.append(Tile(spr_wall, x, y, False))
+				#if random.randint(0, 3) > 0 or (x == 0 and y == 0) or (x == 1 and y == 0) or (x == 0 and y == 1):
+				tempList.append(Tile(Sprites.GROUND_SPRITES[random.randint(0, len(Sprites.GROUND_SPRITES) - 1)], x, y, True))
+				#else:
+				#	tempList.append(Tile(Sprites.spr_wall, x, y, False))
 			self.grid.append(tempList)
 				
 				

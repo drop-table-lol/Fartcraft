@@ -1,7 +1,7 @@
 import pygame
-import Display
+from Displays import Display
+import Sprites
 
-spr_player = pygame.image.load('spr_player.png')
 
 class Player:
 	
@@ -52,7 +52,7 @@ class Player:
 				
 class PlayerHandler:
 	def __init__(self, gridObj, screenObj):
-		self.playerObj = Player(screenObj, gridObj, 0, 0, spr_player)
+		self.playerObj = Player(screenObj, gridObj, 0, 0, Sprites.spr_player)
 		self.gridObj = gridObj
 		self.screenObj = screenObj
 		self.playerHasMoved = False
