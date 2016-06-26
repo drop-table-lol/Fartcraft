@@ -1,11 +1,11 @@
 """ Main game logic. Where the magic happens. """
 
 import pygame
-import Display
-import Grid
-import Input
-import Player
-import Minion
+from Displays import Display
+from Grids import Grid
+from Input import Input
+from Player import Player
+from Minions import Minion
 
 class Game:
 	def __init__(self):

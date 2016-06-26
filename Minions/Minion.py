@@ -1,8 +1,9 @@
 import pygame
-import Display
+from Displays import Display
 import random
+import Sprites
 
-spr_minion = pygame.image.load('spr_minion.png')
+
 
 class Minion:
 	
@@ -60,7 +61,7 @@ class MinionHandler:
 		self.screenObj = screenObj
 		self.listMinions = []
 		for x in range(numMinions):
-			self.listMinions.append(Minion(screenObj, gridObj, 3, 3, spr_minion))
+			self.listMinions.append(Minion(screenObj, gridObj, 3, 3, Sprites.spr_minion))
 	
 	def update(self):
 		for minion in self.listMinions:

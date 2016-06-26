@@ -2,7 +2,7 @@
 
 import pygame
 from pygame.locals import *
-import Display
+from Displays import Display
 import sys
 
 class Input:
