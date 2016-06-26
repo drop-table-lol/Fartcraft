@@ -64,11 +64,11 @@ class PlayerHandler:
 	def move(self, direction):
 		if direction == "UP" and self.playerObj.y - 1 >= 0 and self.gridObj.tileIsWalkable(self.playerObj.x, self.playerObj.y - 1):
 			self.playerObj.moveUp = True
-		elif direction == "DOWN" and self.playerObj.y < Display.HEIGHT_TILES - 1 and self.gridObj.tileIsWalkable(self.playerObj.x, self.playerObj.y + 1):
+		elif direction == "DOWN" and self.playerObj.y < self.gridObj.lengthTiles - 1 and self.gridObj.tileIsWalkable(self.playerObj.x, self.playerObj.y + 1):
 			self.playerObj.moveDown = True
 		elif direction == "LEFT" and self.playerObj.x - 1 >= 0 and self.gridObj.tileIsWalkable(self.playerObj.x - 1, self.playerObj.y):
 			self.playerObj.moveLeft = True
-		elif direction == "RIGHT" and self.playerObj.x < Display.WIDTH_TILES - 1 and self.gridObj.tileIsWalkable(self.playerObj.x + 1, self.playerObj.y):
+		elif direction == "RIGHT" and self.playerObj.x < self.gridObj.widthTiles  - 1 and self.gridObj.tileIsWalkable(self.playerObj.x + 1, self.playerObj.y):
 			self.playerObj.moveRight = True
 		else:
 			return False
