@@ -1,7 +1,7 @@
 import pygame
 import random
 
-SCREEN_WIDTH = 768*2
+SCREEN_WIDTH = 768
 SCREEN_LENGTH = 768
 TILE_SIZE = 64
 
