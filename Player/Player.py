@@ -62,22 +62,19 @@ class PlayerHandler:
 		self.playerObj.update()
 			
 	def move(self, direction):
-		try:
-			if direction == "UP" and self.gridObj.tileIsWalkable(self.playerObj.x, self.playerObj.y - 1):
-				self.playerObj.moveUp = True
-			elif direction == "DOWN" and self.gridObj.tileIsWalkable(self.playerObj.x, self.playerObj.y + 1):
-				self.playerObj.moveDown = True
-			elif direction == "LEFT" and self.gridObj.tileIsWalkable(self.playerObj.x - 1, self.playerObj.y):
-				self.playerObj.moveLeft = True
-			elif direction == "RIGHT" and self.gridObj.tileIsWalkable(self.playerObj.x + 1, self.playerObj.y):
-				self.playerObj.moveRight = True
-			else:
-				return False
-			self.playerHasMoved = True
-			return True
-		except IndexError:
-			pass
-		
+		if direction == "UP" and self.playerObj.y - 1 >= 0 and self.gridObj.tileIsWalkable(self.playerObj.x, self.playerObj.y - 1):
+			self.playerObj.moveUp = True
+		elif direction == "DOWN" and self.playerObj.y < self.gridObj.lengthTiles - 1 and self.gridObj.tileIsWalkable(self.playerObj.x, self.playerObj.y + 1):
+			self.playerObj.moveDown = True
+		elif direction == "LEFT" and self.playerObj.x - 1 >= 0 and self.gridObj.tileIsWalkable(self.playerObj.x - 1, self.playerObj.y):
+			self.playerObj.moveLeft = True
+		elif direction == "RIGHT" and self.playerObj.x < self.gridObj.widthTiles  - 1 and self.gridObj.tileIsWalkable(self.playerObj.x + 1, self.playerObj.y):
+			self.playerObj.moveRight = True
+		else:
+			return False
+		self.playerHasMoved = True
+		return True
+	
 	def scroll(self, direction):
 		if direction == "UP":
 			self.playerObj.screenY += 1

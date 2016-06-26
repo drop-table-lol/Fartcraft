@@ -20,11 +20,10 @@ class Grid:
 			#self.grid.append([])
 			tempList = []
 			for y in xrange(0, self.lengthTiles):
-				if random.randint(0, 3) > 0 or (x == 0 and y == 0) or (x == 1 and y == 0) or (x == 0 and y == 1):
-					tempList.append(Tile(Sprites.GROUND_SPRITES[random.randint(0, len(Sprites.GROUND_SPRITES) - 1)], x, y, True))
-				else:
-					tempList.append(Tile(Sprites.GROUND_SPRITES[random.randint(0, len(Sprites.GROUND_SPRITES) - 1)], x, y, True))
-					#tempList.append(Tile(Sprites.spr_wall, x, y, False))
+				#if random.randint(0, 3) > 0 or (x == 0 and y == 0) or (x == 1 and y == 0) or (x == 0 and y == 1):
+				tempList.append(Tile(Sprites.GROUND_SPRITES[random.randint(0, len(Sprites.GROUND_SPRITES) - 1)], x, y, True))
+				#else:
+				#	tempList.append(Tile(Sprites.spr_wall, x, y, False))
 			self.grid.append(tempList)
 				
 				
