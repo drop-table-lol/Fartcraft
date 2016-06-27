@@ -17,3 +17,10 @@ spr_player = pygame.image.load('PNG'+ os.sep+'spr_player.png')
 
 #Minions
 spr_minion = pygame.image.load('PNG'+ os.sep+'spr_minion.png')
+
+#Menu
+spr_menu = pygame.image.load('PNG'+ os.sep+'Menu.png')
+
+
+#Spawners
+spr_crabSpawner = spr_menu = pygame.image.load('PNG'+ os.sep+'CrabSpawner.png')

@@ -6,6 +6,7 @@ from Grids import Grid
 from Input import Input
 from Player import Player
 from Minions import Minion
+from Structures import Spawner
 
 class Game:
 	def __init__(self):
@@ -18,14 +19,17 @@ class Game:
 			gameNotOver = self.runGame()
 
 	def runGame(self):
+		#Pre-initializations
 		gridObj = Grid.Grid()
-		
-		
 		screenObj = Display.Screen(gridObj)
+		
+		#Actually Setting up the game
 		playerHandlerObj = Player.PlayerHandler(gridObj, screenObj)
-		minionHandlerObj = Minion.MinionHandler(playerHandlerObj, gridObj, screenObj, 1)
+		minionHandlerObj = Minion.MinionHandler(gridObj, screenObj, 1)
+		playerSpawner = Spawner.Spawner(0, 0, (gridObj.lengthTiles/2), 0, (gridObj.lengthTiles/2), gridObj, screenObj)
 		inputObj = Input.Input(playerHandlerObj, minionHandlerObj, screenObj)
 		
+		#Game Loop follows
 		endGame = False
 		while not endGame:
 			endGame = inputObj.update()
@@ -34,6 +38,7 @@ class Game:
 			gridObj.update()
 			playerHandlerObj.update()
 			minionHandlerObj.update()
+			playerSpawner.update()
 			pygame.display.update()
 			Display.FPSCLOCK.tick(Display.FPS)
 	

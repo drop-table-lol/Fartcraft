@@ -2,8 +2,7 @@
 
 
 """
-Bases
-Spawners
+Bases\Spawners
 Minion pathing
 Wall placement
 

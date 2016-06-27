@@ -15,6 +15,9 @@ class Input:
 	def update(self):
 		""" Input event handler """
 		for event in pygame.event.get():
+			if event.type == pygame.MOUSEBUTTONDOWN:
+				#Selector.openMenu()
+				pass
 			if event.type == KEYDOWN:
 				if event.key == K_LEFT:
 					self.playerHandlerObj.move("LEFT")

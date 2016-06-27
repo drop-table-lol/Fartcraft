@@ -7,13 +7,11 @@ import Sprites
 
 class Minion:
 	
-	def __init__(self, screenObj, gridObj, x, y, sprite):
+	def __init__(self, x, y, sprite):
 		self.x = x
 		self.y = y
 		self.screenX = x
 		self.screenY = y
-		self.gridObj = gridObj
-		self.screenObj = screenObj
 		self.size = Display.TILE_SIZE
 		self.rect = pygame.Rect(self.x, self.y, self.size, self.size)
 		self.moveUp = False
@@ -55,13 +53,12 @@ class Minion:
 
 			
 class MinionHandler:
-	def __init__(self, playerObj, gridObj, screenObj, numMinions):
-		self.playerObj = playerObj
+	def __init__(self, gridObj, screenObj, numMinions):
 		self.gridObj = gridObj
 		self.screenObj = screenObj
 		self.listMinions = []
 		for x in range(numMinions):
-			self.listMinions.append(Minion(screenObj, gridObj, 3, 3, Sprites.spr_minion))
+			self.listMinions.append(Minion(3, 3, Sprites.spr_minion))
 	
 	def update(self):
 		for minion in self.listMinions:
