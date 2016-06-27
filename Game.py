@@ -31,6 +31,7 @@ class Game:
 		
 		#Game Loop follows
 		endGame = False
+		
 		while not endGame:
 			endGame = inputObj.update()
 			screenObj.update()
