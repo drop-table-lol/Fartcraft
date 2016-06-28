@@ -2,8 +2,9 @@
 
 import pygame
 from pygame.locals import *
-from Displays import Display
 import sys
+
+from Displays import Display
 
 class Input:
 
@@ -35,3 +36,5 @@ class Input:
 					return True
 			
 		return False
+		
+		

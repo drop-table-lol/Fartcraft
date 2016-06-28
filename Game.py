@@ -7,6 +7,7 @@ from Input import Input
 from Player import Player
 from Minions import Minion
 from Structures import Spawner
+import Sprites #For sweet ass cursor
 
 from pygame.locals import *
 import sys
@@ -26,6 +27,8 @@ class Game:
 		gridObj = Grid.Grid()
 		screenObj = Display.Screen(gridObj)
 		inputObj = Input.Input(screenObj)
+		pygame.mouse.set_visible(False)#Cause we want our own sweet image...
+		
 		
 		#Actually Setting up the game
 		Minny = Minion.Minion(0, 0)
@@ -36,7 +39,7 @@ class Game:
 		pygame.display.update()
 		done = False
 		turns = 1
-		counter = 0
+		sac = Sprites.spr_cursor
 		while not done:
 		
 			print "Turn %s" % (turns)
@@ -44,11 +47,12 @@ class Game:
 			gridObj.updateObjects()
 			done = inputObj.update()
 			screenObj.update()
-			input = raw_input()
 			turns += 1
 			
-			
-			
+			#Cursor shit
+			cursor = pygame.mouse.get_pos()
+			sweetAssCursor = pygame.Rect(cursor[0], cursor[1], Display.TILE_SIZE, Display.TILE_SIZE)
+			Display.CANVAS.blit(sac, sweetAssCursor)
 			
 			pygame.display.update()
 			Display.FPSCLOCK.tick(Display.FPS)
