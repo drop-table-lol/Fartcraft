@@ -55,6 +55,18 @@ class Grid:
 			for j in xrange(0, self.widthTiles):
 				if self.grid[i][j].object is not "empty": #Check each tile for an object	
 					self.grid[i][j].object.moved(False)	
+					
+					
+					
+	def scroll(self, direction):
+		for i in xrange(0, self.lengthTiles): #Need to use length and width tiles, because we're updating EVERYTHING, not just what's seen
+			for j in xrange(0, self.widthTiles):
+				if self.grid[i][j].object is not "empty": #Check each tile for an object	
+					self.grid[i][j].object.scroll(direction)		
+					
+					
+					
+					
 class Tile:
 	def __init__(self, sprite, x, y, collision):
 	
@@ -124,7 +136,7 @@ class Tile:
 				
 		#DOWN		
 		elif direction == "DOWN" and self.object.hasMoved() is False:
-			if self.y + speed < owner.lengthTiles-1 :
+			if self.y + speed < owner.lengthTiles:
 				if owner.grid[self.x][self.y+speed].collision == True:
 					self.object.moved(True)
 					self.object.moveDown()#Update XorY value

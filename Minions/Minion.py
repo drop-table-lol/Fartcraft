@@ -30,6 +30,30 @@ class Minion:
 	def updateRect(self):
 		self.rect = pygame.Rect(self.screenX*Display.TILE_SIZE, self.screenY*Display.TILE_SIZE, self.size, self.size)
 	
+	
+	
+	#SCROLLING--------------------------------------	
+	def scroll(self, dir):
+		if dir == "RIGHT":
+			self.scrollRight()
+		elif dir == "LEFT":
+			self.scrollLeft()
+		elif dir == "UP":
+			self.scrollUp()
+		elif dir == "DOWN":
+			self.scrollDown()
+		
+	def scrollRight(self):
+		self.screenX -= 1
+	def scrollLeft(self):
+		self.screenX += 1
+	def scrollUp(self):
+		self.screenY += 1
+	def scrollDown(self):
+		self.screenY -= 1
+		
+		
+		
 	#MOVEMENT-----------------------------------------
 	def getSpeed(self):
 		return self.speed

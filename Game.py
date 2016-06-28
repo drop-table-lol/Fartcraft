@@ -26,7 +26,7 @@ class Game:
 		#Pre-initializations
 		gridObj = Grid.Grid()
 		screenObj = Display.Screen(gridObj)
-		inputObj = Input.Input(screenObj)
+		inputObj = Input.Input(screenObj, gridObj)
 		pygame.mouse.set_visible(False)#Cause we want our own sweet image...
 		
 		
