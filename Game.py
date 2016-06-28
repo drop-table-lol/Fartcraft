@@ -31,8 +31,14 @@ class Game:
 		
 		
 		#Actually Setting up the game
-		Minny = Minion.Minion(0, 0)
+		Minny = Minion.Minion(0, 0, 0)
+		NotMinny = Minion.Minion(20, 20, 1)
 		gridObj.grid[0][0].recieveObject(Minny)
+		gridObj.grid[20][20].recieveObject(NotMinny)
+		SPW = Spawner.Spawner(0, gridObj.widthTiles/2, 0)
+		NotSPW = Spawner.Spawner(gridObj.lengthTiles-1, gridObj.widthTiles/2, 1)
+		gridObj.grid[0][gridObj.widthTiles/2].recieveObject(SPW)
+		gridObj.grid[gridObj.lengthTiles-1][gridObj.widthTiles/2].recieveObject(NotSPW)
 		
 		#Game Loop follows
 		screenObj.update()
