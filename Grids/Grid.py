@@ -30,7 +30,10 @@ class Grid:
 			
 	
 	def tileIsWalkable(self, x, y):
-		return self.grid[x][y].collision
+		if self.grid[x][y].object is not "empty":
+			return False
+		else:
+			return True
 		
 	def updateObjects(self):
 		for i in xrange(0, self.lengthTiles): #Need to use length and width tiles, because we're updating EVERYTHING, not just what's seen
@@ -69,7 +72,6 @@ class Tile:
 		Display.CANVAS.blit(self.sprite, drawRect)
 		Display.CANVAS.blit(self.text, (displayX*Display.TILE_SIZE, displayY*Display.TILE_SIZE))
 		if self.object is not "empty":
-			print "Drawing obj at %s, %s, " % (self.x, self.y)
 			self.object.draw()
 		
 	
@@ -88,49 +90,67 @@ class Tile:
 		moved = self.object.hasMoved() #To ensure we move at least once. (But not more)
 		
 		#Movement Logic:
-		#while moved == False: #CAREFUL WITH THIS, INFINITE LOOP INCOMING, if a unit is stuck in all directions
-		if direction == "RIGHT" and self.x+speed < owner.widthTiles and self.object.hasMoved() is False: #Check x+1 through x+speed    TODO ----
-			if owner.grid[self.x+speed][self.y].collision == True:
-				self.object.moved(True)
-				self.object.moveRight()#Update XorY value
-				owner.grid[self.x+speed][self.y].recieveObject(self.object) #Send the object on it's way
-				self.object = "empty" # Remove the object that is no longer occupying the space
-				print "right"
-			else: #Right didn't work, due to collision or edge of map
-				object.getRandomDirection() #Try a new direction
-				
-		elif direction == "LEFT" and self.x-speed >= 0 and self.object.hasMoved() is False:
-			if owner.grid[self.x-speed][self.y].collision == True:
-				self.object.moved(True)
-				self.object.moveLeft()#Update XorY value
-				owner.grid[self.x-speed][self.y].recieveObject(self.object) #Send the object on it's way
-				self.object = "empty" # Remove the object that is no longer occupying the space
-				print "left"
-
-			else: #Left didn't work, due to collision or edge of map 
-				object.getRandomDirection() #Try a new direction
-				
-		elif direction == "DOWN" and self.y + speed > owner.lengthTiles and self.object.hasMoved() is False:
-			if owner.grid[self.x][self.y+speed].collision == True:
-				self.object.moved(True)
-				self.object.moveDown()#Update XorY value
-				owner.grid[self.x][self.y+speed].recieveObject(self.object) #Send the object on it's way
-				self.object = "empty" # Remove the object that is no longer occupying the space
-				print "down"
-				
-			else: #Down didn't work, due to collision or edge of map 
-				object.getRandomDirection() #Try a new direction
-					
-		elif direction == "UP" and self.y-speed >= 0 and self.object.hasMoved() is False:
-			if owner.grid[self.x][self.y-speed].collision == True:
-				self.object.moved(True)
-				self.object.moveUp()#Update XorY value
-				owner.grid[self.x][self.y-speed].recieveObject(self.object) #Send the object on it's way
-				self.object = "empty" # Remove the object that is no longer occupying the space
-				print "up"
-				
-			else: #Up didn't work due to collision (OR EDGE OF MAP)
-				object.getRandomDirection()
 		
+		#RIGHT
+		if direction == "RIGHT" and self.object.hasMoved() is False: #Check x+1 through x+speed    TODO ----
+			if self.x+speed < owner.widthTiles: 
+				if owner.grid[self.x+speed][self.y].collision == True:
+					self.object.moved(True)
+					self.object.moveRight()
+					owner.grid[self.x+speed][self.y].recieveObject(self.object) #Send the object on it's way
+					self.object = "empty" # Remove the object that is no longer occupying the space
+					print "right"
+				else: #Right didn't work, due to collision or edge of map
+					self.object.getRandomDirection() #Collision
+			else:
+				self.object.getRandomDirection()#Edge of world
+		
+		
+		#LEFT
+		elif direction == "LEFT" and self.object.hasMoved() is False:
+			if self.x-speed >= 0:
+				if owner.grid[self.x-speed][self.y].collision == True:
+					self.object.moved(True)
+					self.object.moveLeft()#Update XorY value
+					owner.grid[self.x-speed][self.y].recieveObject(self.object) #Send the object on it's way
+					self.object = "empty" # Remove the object that is no longer occupying the space
+					print "left"
+
+				else: #Left didn't work, due to collision or edge of map 
+					self.object.getRandomDirection() #Collision
+			else:
+				self.object.getRandomDirection() #Edge of world
+				
+				
+		#DOWN		
+		elif direction == "DOWN" and self.object.hasMoved() is False:
+			if self.y + speed < owner.lengthTiles-1 :
+				if owner.grid[self.x][self.y+speed].collision == True:
+					self.object.moved(True)
+					self.object.moveDown()#Update XorY value
+					owner.grid[self.x][self.y+speed].recieveObject(self.object) #Send the object on it's way
+					self.object = "empty" # Remove the object that is no longer occupying the space
+					print "down"
+					
+				else: #Down didn't work, due to collision or edge of map 
+					self.object.getRandomDirection() #Collision
+			else:
+				self.object.getRandomDirection() #Edge of world
+					
+					
+		#UP			
+		elif direction == "UP" and self.object.hasMoved() is False:
+			if self.y-speed >= 0:
+				if owner.grid[self.x][self.y-speed].collision == True:
+					self.object.moved(True)
+					self.object.moveUp()#Update XorY value
+					owner.grid[self.x][self.y-speed].recieveObject(self.object) #Send the object on it's way
+					self.object = "empty" # Remove the object that is no longer occupying the space
+					print "up"
+					
+				else: #Up didn't work due to collision (OR EDGE OF MAP)
+					self.object.getRandomDirection() #Collision
+			else:
+				self.object.getRandomDirection()#Edge of world
 					
 				

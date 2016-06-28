@@ -23,8 +23,8 @@ class Minion:
 	#DRAWING-----------------------------------------
 		
 	def draw(self):
-		print "drawing Minion(self) at %s, %s" % (self.screenX, self.screenY)
 		self.updateRect()
+		print "drawing Minion(self) at %s, %s" % (self.screenX, self.screenY)
 		Display.CANVAS.blit(self.sprite, self.rect)
 	
 	def updateRect(self):

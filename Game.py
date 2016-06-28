@@ -25,18 +25,27 @@ class Game:
 		#Pre-initializations
 		gridObj = Grid.Grid()
 		screenObj = Display.Screen(gridObj)
+		inputObj = Input.Input(screenObj)
 		
 		#Actually Setting up the game
-		Minny = Minion.Minion(1, 1)
-		gridObj.grid[1][1].recieveObject(Minny)
+		Minny = Minion.Minion(0, 0)
+		gridObj.grid[0][0].recieveObject(Minny)
 		
 		#Game Loop follows
-		for x in xrange(0, 20):
-			print "Turn %s" % (x)
-			screenObj.update()
-			gridObj.updateObjects()
+		screenObj.update()
+		pygame.display.update()
+		done = False
+		turns = 1
+		counter = 0
+		while not done:
+		
+			print "Turn %s" % (turns)
 			gridObj.resetObjects()
-			input = raw_input(">")
+			gridObj.updateObjects()
+			done = inputObj.update()
+			screenObj.update()
+			input = raw_input()
+			turns += 1
 			
 			
 			
