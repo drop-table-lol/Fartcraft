@@ -23,4 +23,7 @@ spr_menu = pygame.image.load('PNG'+ os.sep+'Menu.png')
 
 
 #Spawners
-spr_crabSpawner = spr_menu = pygame.image.load('PNG'+ os.sep+'CrabSpawner.png')
+spr_crabSpawner = pygame.image.load('PNG'+ os.sep+'CrabSpawner.png')
+
+#SweetCursorofgoodness...
+spr_cursor = pygame.image.load('PNG'+os.sep+'Cursor.png')

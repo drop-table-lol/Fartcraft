@@ -7,6 +7,10 @@ from Input import Input
 from Player import Player
 from Minions import Minion
 from Structures import Spawner
+import Sprites #For sweet ass cursor
+
+from pygame.locals import *
+import sys
 
 class Game:
 	def __init__(self):
@@ -22,23 +26,34 @@ class Game:
 		#Pre-initializations
 		gridObj = Grid.Grid()
 		screenObj = Display.Screen(gridObj)
+		inputObj = Input.Input(screenObj, gridObj)
+		pygame.mouse.set_visible(False)#Cause we want our own sweet image...
+		
 		
 		#Actually Setting up the game
-		playerHandlerObj = Player.PlayerHandler(gridObj, screenObj)
-		minionHandlerObj = Minion.MinionHandler(gridObj, screenObj, 1)
-		playerSpawner = Spawner.Spawner(0, 0, (gridObj.lengthTiles/2), 0, (gridObj.lengthTiles/2), gridObj, screenObj)
-		inputObj = Input.Input(playerHandlerObj, minionHandlerObj, screenObj)
+		Minny = Minion.Minion(0, 0)
+		gridObj.grid[0][0].recieveObject(Minny)
 		
 		#Game Loop follows
-		endGame = False
-		while not endGame:
-			endGame = inputObj.update()
+		screenObj.update()
+		pygame.display.update()
+		done = False
+		turns = 1
+		sac = Sprites.spr_cursor
+		while not done:
+		
+			print "Turn %s" % (turns)
+			gridObj.resetObjects()
+			gridObj.updateObjects()
+			done = inputObj.update()
 			screenObj.update()
+			turns += 1
 			
-			gridObj.update()
-			playerHandlerObj.update()
-			minionHandlerObj.update()
-			playerSpawner.update()
+			#Cursor shit
+			cursor = pygame.mouse.get_pos()
+			sweetAssCursor = pygame.Rect(cursor[0], cursor[1], Display.TILE_SIZE, Display.TILE_SIZE)
+			Display.CANVAS.blit(sac, sweetAssCursor)
+			
 			pygame.display.update()
 			Display.FPSCLOCK.tick(Display.FPS)
 	
