@@ -106,7 +106,7 @@ class Tile:
 		#RIGHT
 		if direction == "RIGHT" and self.object.hasMoved() is False: #Check x+1 through x+speed    TODO ----
 			if self.x+speed < owner.widthTiles: 
-				if owner.grid[self.x+speed][self.y].collision == True:
+				if owner.tileIsWalkable(self.x+speed, self.y):
 					self.object.moved(True)
 					self.object.moveRight()
 					owner.grid[self.x+speed][self.y].recieveObject(self.object) #Send the object on it's way
@@ -121,7 +121,7 @@ class Tile:
 		#LEFT
 		elif direction == "LEFT" and self.object.hasMoved() is False:
 			if self.x-speed >= 0:
-				if owner.grid[self.x-speed][self.y].collision == True:
+				if owner.tileIsWalkable(self.x-speed, self.y):
 					self.object.moved(True)
 					self.object.moveLeft()#Update XorY value
 					owner.grid[self.x-speed][self.y].recieveObject(self.object) #Send the object on it's way
@@ -137,7 +137,7 @@ class Tile:
 		#DOWN		
 		elif direction == "DOWN" and self.object.hasMoved() is False:
 			if self.y + speed < owner.lengthTiles:
-				if owner.grid[self.x][self.y+speed].collision == True:
+				if owner.tileIsWalkable(self.x, self.y+speed):
 					self.object.moved(True)
 					self.object.moveDown()#Update XorY value
 					owner.grid[self.x][self.y+speed].recieveObject(self.object) #Send the object on it's way
@@ -153,7 +153,7 @@ class Tile:
 		#UP			
 		elif direction == "UP" and self.object.hasMoved() is False:
 			if self.y-speed >= 0:
-				if owner.grid[self.x][self.y-speed].collision == True:
+				if owner.tileIsWalkable(self.x, self.y-speed):
 					self.object.moved(True)
 					self.object.moveUp()#Update XorY value
 					owner.grid[self.x][self.y-speed].recieveObject(self.object) #Send the object on it's way
