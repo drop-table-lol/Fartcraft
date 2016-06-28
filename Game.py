@@ -8,6 +8,9 @@ from Player import Player
 from Minions import Minion
 from Structures import Spawner
 
+from pygame.locals import *
+import sys
+
 class Game:
 	def __init__(self):
 		pygame.init()
@@ -24,22 +27,20 @@ class Game:
 		screenObj = Display.Screen(gridObj)
 		
 		#Actually Setting up the game
-		playerHandlerObj = Player.PlayerHandler(gridObj, screenObj)
-		minionHandlerObj = Minion.MinionHandler(gridObj, screenObj, 1)
-		playerSpawner = Spawner.Spawner(0, 0, (gridObj.lengthTiles/2), 0, (gridObj.lengthTiles/2), gridObj, screenObj)
-		inputObj = Input.Input(playerHandlerObj, minionHandlerObj, screenObj)
+		Minny = Minion.Minion(1, 1)
+		gridObj.grid[1][1].recieveObject(Minny)
 		
 		#Game Loop follows
-		endGame = False
-		
-		while not endGame:
-			endGame = inputObj.update()
+		for x in xrange(0, 20):
+			print "Turn %s" % (x)
 			screenObj.update()
+			gridObj.updateObjects()
+			gridObj.resetObjects()
+			input = raw_input(">")
 			
-			gridObj.update()
-			playerHandlerObj.update()
-			minionHandlerObj.update()
-			playerSpawner.update()
+			
+			
+			
 			pygame.display.update()
 			Display.FPSCLOCK.tick(Display.FPS)
 	
