@@ -32,9 +32,10 @@ class Game:
 		
 		#Actually Setting up the game
 		Minny = Minion.Minion(0, 0, 0)
-		#NotMinny = Minion.Minion(0, 20, 1)
+		NotMinny = Minion.Minion(10, 0, 1)
+		print "team %s" % (NotMinny.team)
 		gridObj.grid[0][0].recieveObject(Minny)
-		#gridObj.grid[0][20].recieveObject(NotMinny)
+		gridObj.grid[10][0].recieveObject(NotMinny)
 		SPW = Spawner.Spawner(5, 0, 0)
 		NotSPW = Spawner.Spawner(6, 0, 1)
 		gridObj.grid[5][0].recieveObject(SPW)
@@ -48,6 +49,7 @@ class Game:
 		sac = Sprites.spr_cursor
 		while not done:
 		
+			input = raw_input(">>>")
 			print "Turn %s" % (turns)
 			gridObj.updateObjects()
 			done = inputObj.update()

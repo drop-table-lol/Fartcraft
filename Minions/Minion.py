@@ -15,10 +15,18 @@ class Minion:
 		self.screenY = y
 		self.size = Display.TILE_SIZE
 		self.rect = pygame.Rect(self.x, self.y, self.size, self.size)
-		self.sprite = Sprites.spr_minion
+		self.team = team
+		if self.team is 0:
+			self.sprite = Sprites.spr_minion
+		if self.team is 1:
+			self.sprite = Sprites.spr_minion1
 		
 		#MOVEMENT-----------------------------------------
-		self.direction = "RIGHT"
+		if self.team is 0:
+			self.direction = "RIGHT"
+		elif self.team is 1:
+			self.direction = "LEFT"
+		
 		self.didMove = False
 		
 		#COMBAT------------------------------
@@ -28,7 +36,6 @@ class Minion:
 		self.damage = 1
 		self.defense = 1
 		self.initiative = 1
-		self.team = team
 		self.buffsActive = False #Is the minion currently under a buff (or debuff)?
 		self.turns = 0 #Increase this every turn, as a turn counter, useful for buffing and stuff per/turn
 		self.buffTurns = 0 #How long the buff (or debuff) lasts
