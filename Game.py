@@ -31,10 +31,10 @@ class Game:
 		
 		
 		#Actually Setting up the game
-		Minny = Minion.Minion(0, 0, 0)
+		Minny = Minion.Minion(1, 0, 0)
 		NotMinny = Minion.Minion(10, 0, 1)
 		print "team %s" % (NotMinny.team)
-		gridObj.grid[0][0].recieveObject(Minny)
+		gridObj.grid[1][0].recieveObject(Minny)
 		gridObj.grid[10][0].recieveObject(NotMinny)
 		SPW = Spawner.Spawner(5, 0, 0)
 		NotSPW = Spawner.Spawner(6, 0, 1)

@@ -28,28 +28,29 @@ DEBUFF_TURNS = 2
 as well as two ranged units, though, two ranged units could use the same initiative.
 ALSO, do buildings have initative? Do they autocast? Do they cost AP?"""
 def meleeCombat(attacker, defender, owner):
-	print "CHHARRRGE!!!!"
-	if attacker.initiative+1 > defender.initiative: #Attacker gets an initiative bonus for forcing combat
-		defender.health -= attacker.damage
-		if not isDead(defender):
-			attacker.health -= defender.damage
-			if isDead(attacker):
-				owner.attacker.death()
-		else:
-			defender.death()
-			attacker.debuff("initative", INITATIVE_DEBUFF, DEBUFF_TURNS)
-
-	elif defender.initiative >= attacker.initiative: #BUT, the defender wins ties...
-		attacker.health -= defender.damage
-		if not isDead(attacker):
+	if not attacker.isDead:
+		print "CHHARRRGE!!!!"
+		if attacker.initiative+1 > defender.initiative: #Attacker gets an initiative bonus for forcing combat
 			defender.health -= attacker.damage
-			if isDead(defender):
+			if not isDead(defender):
+				attacker.health -= defender.damage
+				if isDead(attacker):
+					owner.attacker.death()
+			else:
 				defender.death()
-		else:
-			attacker.death()
-			defender.debuff("initative", INITATIVE_DEBUFF, DEBUFF_TURNS)
-		
-		
+				attacker.debuff("initative", INITATIVE_DEBUFF, DEBUFF_TURNS)
+
+		elif defender.initiative >= attacker.initiative: #BUT, the defender wins ties...
+			attacker.health -= defender.damage
+			if not isDead(attacker):
+				defender.health -= attacker.damage
+				if isDead(defender):
+					defender.death()
+			else:
+				attacker.death()
+				defender.debuff("initative", INITATIVE_DEBUFF, DEBUFF_TURNS)
+			
+			
 def isDead(unit):
 	if unit.health <= 0:
 		return True
