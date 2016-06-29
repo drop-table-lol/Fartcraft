@@ -17,6 +17,7 @@ spr_player = pygame.image.load('PNG'+ os.sep+'spr_player.png')
 
 #Minions
 spr_minion = pygame.image.load('PNG'+ os.sep+'spr_minion.png')
+spr_minion1 = pygame.image.load('PNG'+ os.sep+'spr_minion1.png')
 
 #Menu
 spr_menu = pygame.image.load('PNG'+ os.sep+'Menu.png')
