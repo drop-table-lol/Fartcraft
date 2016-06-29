@@ -21,6 +21,12 @@ class Spawner:
 		
 		self.health = BASE_HEALTH
 		self.speed = 0
+		self.initiative = 0
+		self.attack = 0
+		self.defense = 0
+		self.attacks = 0
+		self.damage = 0
+		self.isDead = False
 		
 		
 		
@@ -62,5 +68,10 @@ class Spawner:
 		self.screenY += 1
 	def scrollDown(self):
 		self.screenY -= 1
+		
+	#COMBAT----------------------------------------------
+	def death(self):
+		print "oh no! spawner down!"
+		self.isDead = True
 		
 		

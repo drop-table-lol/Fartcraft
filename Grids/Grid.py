@@ -1,6 +1,8 @@
 import pygame
-from Displays import Display
 import random
+
+from Displays import Display
+from Combat import Combat
 import Sprites
 
 
@@ -39,7 +41,7 @@ class Grid:
 		for i in xrange(0, self.lengthTiles): #Need to use length and width tiles, because we're updating EVERYTHING, not just what's seen
 			for j in xrange(0, self.widthTiles):
 				if self.grid[i][j].object is not "empty": #Check each tile for an object
-					if self.grid[i][j].objectCanMove(): #See if it is can move
+					if self.grid[i][j].objectCanMove() and self.grid[i][j].object.didMove is False: #See if it is can move
 						print "Moving from %s, %s" % (i, j)
 						self.grid[i][j].moveObject(self) #Then move it
 						
@@ -56,6 +58,13 @@ class Grid:
 				if self.grid[i][j].object is not "empty": #Check each tile for an object	
 					self.grid[i][j].object.moved(False)	
 					
+	"""Rather a macabre thing, but exactly what it sounds like. Remove dead units from the field."""
+	def corpseCleanup(self):
+		for i in xrange(0, self.lengthTiles): #Need to use length and width tiles, because we're updating EVERYTHING, not just what's seen
+			for j in xrange(0, self.widthTiles):
+				if self.grid[i][j].object is not "empty": #Check each tile for an object	
+					if self.grid[i][j].object.isDead is True:
+						self.grid[i][j].object = "empty" #CLEAN up those nasty corpses before they get more nasty
 					
 					
 	def scroll(self, direction):
@@ -95,6 +104,8 @@ class Tile:
 	def objectCanMove(self):
 		if self.object.getSpeed() > 0:
 			return True #And then call moveObject()
+		else:
+			return False
 		
 	def moveObject(self, owner): #In this case, the owner is the grid
 		speed = self.object.getSpeed() #To see how many tiles we need to check
@@ -112,6 +123,9 @@ class Tile:
 					owner.grid[self.x+speed][self.y].recieveObject(self.object) #Send the object on it's way
 					self.object = "empty" # Remove the object that is no longer occupying the space
 					print "right"
+					
+				elif not owner.tileIsWalkable(self.x+speed, self.y):#We couldn't move there, but can we attack it?
+					Combat.meleeCombat(self.object, owner.grid[self.x+speed][self.y].object, owner)
 				else: #Right didn't work, due to collision or edge of map
 					self.object.getRandomDirection() #Collision
 			else:
