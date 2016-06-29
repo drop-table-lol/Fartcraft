@@ -32,13 +32,13 @@ class Game:
 		
 		#Actually Setting up the game
 		Minny = Minion.Minion(0, 0, 0)
-		NotMinny = Minion.Minion(20, 20, 1)
+		#NotMinny = Minion.Minion(0, 20, 1)
 		gridObj.grid[0][0].recieveObject(Minny)
-		gridObj.grid[20][20].recieveObject(NotMinny)
-		SPW = Spawner.Spawner(0, gridObj.widthTiles/2, 0)
-		NotSPW = Spawner.Spawner(gridObj.lengthTiles-1, gridObj.widthTiles/2, 1)
-		gridObj.grid[0][gridObj.widthTiles/2].recieveObject(SPW)
-		gridObj.grid[gridObj.lengthTiles-1][gridObj.widthTiles/2].recieveObject(NotSPW)
+		#gridObj.grid[0][20].recieveObject(NotMinny)
+		SPW = Spawner.Spawner(5, 0, 0)
+		NotSPW = Spawner.Spawner(6, 0, 1)
+		gridObj.grid[5][0].recieveObject(SPW)
+		gridObj.grid[6][0].recieveObject(NotSPW)
 		
 		#Game Loop follows
 		screenObj.update()
@@ -49,11 +49,12 @@ class Game:
 		while not done:
 		
 			print "Turn %s" % (turns)
-			gridObj.resetObjects()
 			gridObj.updateObjects()
 			done = inputObj.update()
 			screenObj.update()
+			gridObj.resetObjects()
 			turns += 1
+			gridObj.corpseCleanup()
 			
 			#Cursor shit
 			cursor = pygame.mouse.get_pos()
