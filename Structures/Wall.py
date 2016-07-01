@@ -34,7 +34,6 @@ class Wall:
 		self.health = BASE_HEALTH
 		self.speed = 0
 		self.initiative = 0
-		self.attack = 0
 		self.defense = 1
 		self.attacks = 0
 		self.damage = 0

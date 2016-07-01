@@ -30,15 +30,17 @@ ALSO, do buildings have initative? Do they autocast? Do they cost AP?"""
 def meleeCombat(attacker, defender, owner):
 	if not attacker.isDead:
 		print "CHHARRRGE!!!!"
-		if attacker.initiative+1 > defender.initiative: #Attacker gets an initiative bonus for forcing combat
-			defender.health -= attacker.damage
-			if not isDead(defender):
-				attacker.health -= defender.damage
-				if isDead(attacker):
-					owner.attacker.death()
-			else:
-				defender.death()
-				attacker.debuff("initative", INITATIVE_DEBUFF, DEBUFF_TURNS)
+		print "%s is attacking %s with %s initative" % (attacker.handle, defender.handle, attacker.initiative)
+		if attacker.initiative > 0: #Must not be recovering from debuff
+			if attacker.initiative+1 > defender.initiative: #Attacker gets an initiative bonus for forcing combat
+				defender.health -= attacker.damage
+				if not isDead(defender):
+					attacker.health -= defender.damage
+					if isDead(attacker):
+						attacker.death()
+				else:
+					defender.death()
+					attacker.debuff("initative", INITATIVE_DEBUFF, DEBUFF_TURNS)
 
 		elif defender.initiative >= attacker.initiative: #BUT, the defender wins ties...
 			attacker.health -= defender.damage

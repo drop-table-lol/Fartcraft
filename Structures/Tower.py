@@ -1,3 +1,7 @@
+"""Tower.py
+	TODO add fighting info. RANGED :o 
+	Otherwise, basic structure (might wanna make that a superclass, eh?)
+"""
 """Spawner class"""
 import pygame
 import Sprites
@@ -5,10 +9,10 @@ from Displays import Display
 
 BASE_HEALTH = 5
 
-class Spawner:
+class Tower:
 	
 	def __init__(self, x, y, team):
-		self.handle = "spawner"
+		self.handle = "tower"
 		self.team = team
 		self.x = x
 		self.y = y
@@ -18,14 +22,14 @@ class Spawner:
 		self.rect = pygame.Rect(self.x, self.y, self.size, self.size)
 		self.screenX = x
 		self.screenY = y
-		self.sprite = Sprites.spr_crabSpawner
+		self.sprite = Sprites.spr_tower0
 		
 		self.health = BASE_HEALTH
 		self.speed = 0
 		self.initiative = 0
 		self.defense = 0
-		self.attacks = 0
-		self.damage = 0
+		self.attacks = 1
+		self.damage = 1
 		self.isDead = False
 		
 		
@@ -71,7 +75,7 @@ class Spawner:
 		
 	#COMBAT----------------------------------------------
 	def death(self):
-		print "oh no! spawner down!"
+		print "oh no! Tower down!"
 		self.isDead = True
 		
 		

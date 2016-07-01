@@ -8,6 +8,7 @@ from Player import Player
 from Minions import Minion
 from Structures import Spawner
 from Structures import Wall
+from Structures import Tower
 import Sprites #For sweet ass cursor
 
 from pygame.locals import *
@@ -32,12 +33,20 @@ class Game:
 		
 		
 		#Actually Setting up the game
-		Minny = Minion.Minion(20, 0, 1)
-		#NotMinny = Minion.Minion(10, 0, 1)
+		Minny0 = Minion.Minion(8, 0, 1)
+		Minny1 = Minion.Minion(11, 0, 1)
+		Minny2 = Minion.Minion(14, 0, 1)
+		Minny3 = Minion.Minion(17, 0, 1)
+		Minny4 = Minion.Minion(20, 0, 1)
+		DopeAssTower = Tower.Tower(1, 0, 0)
 		#print "team %s" % (NotMinny.team)
 		
-		gridObj.grid[20][0].recieveObject(Minny)
-		#gridObj.grid[10][0].recieveObject(NotMinny)
+		gridObj.grid[8][0].recieveObject(Minny0)
+		gridObj.grid[11][0].recieveObject(Minny1)
+		gridObj.grid[14][0].recieveObject(Minny2)
+		gridObj.grid[17][0].recieveObject(Minny3)
+		gridObj.grid[20][0].recieveObject(Minny4)
+		gridObj.grid[1][0].recieveObject(DopeAssTower)
 	#	SPW = Spawner.Spawner(19, 1, 0)
 		#NotSPW = Spawner.Spawner(6, 0, 1)
 	#	gridObj.grid[19][1].recieveObject(SPW)

@@ -155,7 +155,7 @@ class Minion:
 			self.defense += num
 			if self.defense < 0:
 				self.defense = 0
-		if type == "initative":
+		if type == "initiative":
 			self.activeBuffs.append(type)
 			self.initiative += num
 			if self.initiative < 0:
