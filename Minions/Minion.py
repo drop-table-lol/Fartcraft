@@ -47,7 +47,6 @@ class Minion:
 	def draw(self):
 		self.updateRect()
 		Display.CANVAS.blit(self.sprite, self.rect)
-		self.turns += 1
 	
 	def updateRect(self):
 		self.rect = pygame.Rect(self.screenX*Display.TILE_SIZE, self.screenY*Display.TILE_SIZE, self.size, self.size)
@@ -162,6 +161,15 @@ class Minion:
 			self.initiative += num
 			if self.initiative < 0:
 				self.initiative = 0
+				
+				
+	#LOGIC ------------------------------------------
+	def update(self): #TODO continue work on buffs logic
+		turns += 1
+		if buffsActive:
+			buffTurns -= 1
+		if buffTurns is 0:
+			buffsActive = False
 				
 	def death(self):
 		print "I DIED"
