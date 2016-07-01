@@ -3,6 +3,7 @@ import random
 
 from Displays import Display
 from Combat import Combat
+from Pathing import Pathing
 import Sprites
 
 
@@ -32,7 +33,7 @@ class Grid:
 			
 	
 	def tileIsWalkable(self, x, y):
-		if self.grid[x][y].object is not "empty":
+		if self.grid[x][y].object is not "empty" or not "wall":
 			return False
 		else:
 			return True
