@@ -43,6 +43,7 @@ class Grid:
 	def updateObjects(self):
 		for i in xrange(0, self.lengthTiles): #Need to use length and width tiles, because we're updating EVERYTHING, not just what's seen
 			for j in xrange(0, self.widthTiles):
+				self.grid[i][j].update()
 				if self.grid[i][j].object is not "empty": #Check each tile for an object
 					if self.grid[i][j].objectCanMove() and self.grid[i][j].object.didMove is False: #See if it is can move
 						self.grid[i][j].moveObject(self) #Then move it
@@ -91,7 +92,12 @@ class Grid:
 		if self.grid[obj.x][obj.y].object is "empty":
 			self.grid[obj.x][obj.y].receiveObject(obj)
 		else:
-			pass
+			Combat.meleeCombat(obj, self.grid[obj.x][obj.y].object, self)
+			if obj.isDead:
+				pass
+			else:
+				self.grid[obj.x][obj.y].receiveObject(obj)
+			
 					
 					
 					
@@ -113,6 +119,12 @@ class Tile:
 		Display.CANVAS.blit(self.text, (displayX*Display.TILE_SIZE, displayY*Display.TILE_SIZE))
 		if self.object is not "empty":
 			self.object.draw()
+			
+	def update(self):
+		if self.object is "empty":
+			pass
+		else:
+			self.object.update()
 		
 	
 	"""This eliminates reaching into other's lists, (interface),

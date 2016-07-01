@@ -3,8 +3,12 @@ from Displays import Display
 import random
 import Sprites
 
-
-
+BASE_HEALTH = 1
+BASE_SPEED = 1
+BASE_ATTACKS = 1
+BASE_DAMAGE = 1
+BASE_DEFENSE = 1
+BASE_INITIATIVE = 1
 class Minion:
 	
 	def __init__(self, x, y, scrollX, scrollY, team):
@@ -39,8 +43,9 @@ class Minion:
 		self.initiative = 1
 		self.buffsActive = False #Is the minion currently under a buff (or debuff)?
 		self.turns = 0 #Increase this every turn, as a turn counter, useful for buffing and stuff per/turn
-		self.buffTurns = 0 #How long the buff (or debuff) lasts
 		self.activeBuffs = [] #In case we get more than one...
+		self.buffTurns = [] #This correspondes to each buffs number of turns. Iterate down the list each update
+		self.buffedAmmt = [] #This is the ammount each buff or debuff contained. Apply the opposite when buffTurns is 0
 		self.isDead = False
 	#DRAWING-----------------------------------------
 		
@@ -122,55 +127,111 @@ class Minion:
 	def buff(self, type, num, numOfTurns):
 		print "ALRIGHT!! Buff time!"
 		self.buffsActive = True
-		self.buffTurns = numOfTurns
 		if type == "speed":
 			self.activeBuffs.append(type)
 			self.speed += num
+			self.buffTurns.append(numOfTurns) 
+			self.buffedAmmt.append(num)
 		if type == "attack":
 			self.activeBuffs.append(type)
 			self.attack += num
+			self.buffTurns.append(numOfTurns) 
+			self.buffedAmmt.append(num)
 		if type == "defense":
 			self.activeBuffs.append(type)
 			self.defense += num
+			self.buffTurns.append(numOfTurns) 
+			self.buffedAmmt.append(num)
 		if type == "initative":
 			self.activeBuffs.append(type)
 			self.initiative += num
+			self.buffTurns.append(numOfTurns) 
+			self.buffedAmmt.append(num)
 				
 	#SAME CODE AS BUFF, just for negative numbers
 	def debuff(self, type, num, numOfTurns):
 		print "OH NO! Acquired a debuff :("
 		self.buffsActive = True
-		self.buffTurns = numOfTurns
 		if type == "speed":
 			self.activeBuffs.append(type)
 			self.speed += num
+			self.buffTurns.append(numOfTurns) 
+			self.buffedAmmt.append(num)
 			if self.speed < 0:
 				self.speed = 0
 		if type == "attack":
 			self.activeBuffs.append(type)
 			self.attack += num
+			self.buffTurns.append(numOfTurns) 
+			self.buffedAmmt.append(num)
 			if self.attack < 0:
 				self.attack = 0
 		if type == "defense":
 			self.activeBuffs.append(type)
 			self.defense += num
+			self.buffTurns.append(numOfTurns) 
+			self.buffedAmmt.append(num)
 			if self.defense < 0:
 				self.defense = 0
 		if type == "initiative":
 			self.activeBuffs.append(type)
 			self.initiative += num
+			self.buffTurns.append(numOfTurns) 
+			self.buffedAmmt.append(num)
 			if self.initiative < 0:
 				self.initiative = 0
 				
 				
+	def setToBaseStat(self, stat):
+		if stat is "speed":
+			self.speed = BASE_SPEED
+		elif stat is "health":
+			self.health = BASE_HEALTH
+		elif stat is "attacks":
+			self.attacks = BASE_ATTACKS
+		elif stat is "damage":
+			self.damage = BASE_DAMAGE
+		elif stat is "defense":
+			self.defense = BASE_DEFENSE
+		elif stat is "initiative":
+			self.initiative = BASE_INITIATIVE
+					
+				
 	#LOGIC ------------------------------------------
 	def update(self): #TODO continue work on buffs logic
-		turns += 1
-		if buffsActive:
-			buffTurns -= 1
-		if buffTurns is 0:
-			buffsActive = False
-				
+		self.turns += 1
+		if self.buffsActive:
+			tmps = [] #For collecting all the numbers we need to remove (so we don't change the list as we iterate)
+			for x in xrange(len(self.buffTurns)):
+				stat = self.activeBuffs[x]
+				self.buffTurns[x] -= 1 #Each turn, take a turn off of buffs/debuffs
+				if self.buffTurns[x] is 0: #When it hits zero, undo the buff
+					if stat is "speed":
+						self.speed -= self.buffedAmmt[x]
+						print "set speed to %s" % (self.speed)
+					elif stat is "health":
+						self.health -= self.buffedAmmt[x]
+						print "set health to %s" % (self.speed)
+					elif stat is "attacks":
+						self.attacks -= self.buffedAmmt[x]
+						print "set attacks to %s" % (self.speed)
+					elif stat is "damage":
+						self.damage -= self.buffedAmmt[x]
+						print "set damage to %s" % (self.speed)
+					elif stat is "defense":
+						self.defense -= self.buffedAmmt[x]
+						print "set defense to %s" % (self.speed)
+					elif stat is "initiative":
+						self.initiative -= self.buffedAmmt[x]
+						print "set initiative to %s" % (self.speed)
+					tmps.append(x) #Append each position to a list of nums
+			
+			for j in tmps: #Use that list of nums to remove all finished buffs from list
+				del self.activeBuffs[j]
+				del self.buffTurns[j]
+				del self.buffedAmmt[j]
+
+						
 	def death(self):
 		print "I DIED"
 		self.isDead = True

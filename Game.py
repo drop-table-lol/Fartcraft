@@ -35,13 +35,14 @@ class Game:
 		
 		
 		#Actually Setting up the game
-		#DopeAssTower = Tower.Tower(1, 0, 0)
+		DopeAssTower = Tower.Tower(2, 2, 0)
 		
 		SPW = Spawner.Spawner(0, 0, 0, gridObj)
 		NotSPW = Spawner.Spawner(20, 0, 1, gridObj)
 		gridObj.receiveObject(SPW)
 		gridObj.receiveObject(NotSPW)
 		gridObj.receiveObject(Jdogg)
+		gridObj.receiveObject(DopeAssTower)
 	
 		
 		#Game Loop follows

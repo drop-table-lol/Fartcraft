@@ -20,8 +20,8 @@ DEFENSE_DEBUFF = -1
 SPEED_BUFF = 1
 SPEED_DEBUFF = -1
 
-BUFF_TURNS = 2
-DEBUFF_TURNS = 2
+BUFF_TURNS = 4
+DEBUFF_TURNS = 4
 	
 	
 """Melee combat for units right next to each other. Need to develop a way to have combat between mixed types,
@@ -30,7 +30,7 @@ ALSO, do buildings have initative? Do they autocast? Do they cost AP?"""
 def meleeCombat(attacker, defender, owner):
 	if not attacker.isDead:
 		print "CHHARRRGE!!!!"
-		print "%s is attacking %s with %s initative" % (attacker.handle, defender.handle, attacker.initiative)
+		print "%s of clan %s is attacking %s of clan %s!" % (attacker.handle, defender.handle, attacker.team, defender.team)
 		if attacker.initiative > 0: #Must not be recovering from debuff
 			if attacker.initiative+1 > defender.initiative: #Attacker gets an initiative bonus for forcing combat
 				defender.health -= attacker.damage
@@ -40,7 +40,7 @@ def meleeCombat(attacker, defender, owner):
 						attacker.death()
 				else:
 					defender.death()
-					attacker.debuff("initative", INITATIVE_DEBUFF, DEBUFF_TURNS)
+					attacker.debuff("initiative", INITATIVE_DEBUFF, DEBUFF_TURNS)
 
 		elif defender.initiative >= attacker.initiative: #BUT, the defender wins ties...
 			attacker.health -= defender.damage
@@ -50,7 +50,7 @@ def meleeCombat(attacker, defender, owner):
 					defender.death()
 			else:
 				attacker.death()
-				defender.debuff("initative", INITATIVE_DEBUFF, DEBUFF_TURNS)
+				defender.debuff("initiative", INITATIVE_DEBUFF, DEBUFF_TURNS)
 			
 			
 def isDead(unit):

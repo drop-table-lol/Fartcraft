@@ -26,7 +26,7 @@ class Spawner:
 		self.initiative = 0
 		self.defense = 2
 		self.attacks = 0
-		self.damage = 1
+		self.damage = 0
 		self.isDead = False
 		
 		

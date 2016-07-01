@@ -30,7 +30,7 @@ class Hero:
 		
 		#COMBAT------------------------------
 		self.health = 5
-		self.speed = 2
+		self.speed = 1
 		self.attacks = 2
 		self.damage = 1
 		self.defense = 1
