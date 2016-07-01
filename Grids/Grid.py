@@ -33,8 +33,8 @@ class Grid:
 			
 	
 	def tileIsWalkable(self, x, y):
-		if self.grid[x][y].object is not "empty" or not "wall":
-			return False
+		if self.grid[x][y].object is not "empty":
+				return False
 		else:
 			return True
 		
@@ -124,7 +124,7 @@ class Tile:
 					self.object = "empty" # Remove the object that is no longer occupying the space
 					print "right"
 					
-				elif not owner.tileIsWalkable(self.x+speed, self.y):#We couldn't move there, but can we attack it?
+				elif not owner.tileIsWalkable(self.x+speed, self.y) and owner.grid[self.x+speed][self.y].object.handle is not "wall":#We couldn't move there, but can we attack it?
 					Combat.meleeCombat(self.object, owner.grid[self.x+speed][self.y].object, owner)
 				else: #Right didn't work, due to collision or edge of map
 					self.object.getRandomDirection() #Collision
@@ -142,7 +142,7 @@ class Tile:
 					self.object = "empty" # Remove the object that is no longer occupying the space
 					print "left"
 					
-				elif not owner.tileIsWalkable(self.x-speed, self.y):#We couldn't move there, but can we attack it?
+				elif not owner.tileIsWalkable(self.x-speed, self.y) and owner.grid[self.x-speed][self.y].object.handle is not "wall":#We couldn't move there, but can we attack it?
 					Combat.meleeCombat(self.object, owner.grid[self.x-speed][self.y].object, owner)
 
 				else: #Left didn't work, due to collision or edge of map 
@@ -161,7 +161,7 @@ class Tile:
 					self.object = "empty" # Remove the object that is no longer occupying the space
 					print "down"
 					
-				elif not owner.tileIsWalkable(self.x, self.y+speed):#We couldn't move there, but can we attack it?
+				elif not owner.tileIsWalkable(self.x, self.y+speed) and owner.grid[self.x][self.y+speed].object.handle is not "wall":#We couldn't move there, but can we attack it?
 					Combat.meleeCombat(self.object, owner.grid[self.x][self.y+speed].object, owner)
 					
 				else: #Down didn't work, due to collision or edge of map 
@@ -180,7 +180,7 @@ class Tile:
 					self.object = "empty" # Remove the object that is no longer occupying the space
 					print "up"
 					
-				elif not owner.tileIsWalkable(self.x, self.y-speed):#We couldn't move there, but can we attack it?
+				elif not owner.tileIsWalkable(self.x, self.y-speed) and owner.grid[self.x][self.y-speed].object.handle is not "wall":#We couldn't move there, but can we attack it?
 					Combat.meleeCombat(self.object, owner.grid[self.x][self.y-speed].object, owner)
 					
 				else: #Up didn't work due to collision (OR EDGE OF MAP)
