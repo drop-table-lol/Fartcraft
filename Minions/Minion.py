@@ -9,6 +9,7 @@ class Minion:
 	
 	def __init__(self, x, y, team):
 		#DRAWING-----------------------------------------
+		self.handle = "minion"
 		self.x = x
 		self.y = y
 		self.screenX = x
@@ -45,7 +46,6 @@ class Minion:
 		
 	def draw(self):
 		self.updateRect()
-		print "drawing Minion(self) at %s, %s" % (self.screenX, self.screenY)
 		Display.CANVAS.blit(self.sprite, self.rect)
 		self.turns += 1
 	
