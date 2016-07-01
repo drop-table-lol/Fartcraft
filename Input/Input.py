@@ -46,7 +46,8 @@ class Input:
 					if self.gridObj.grid[pos[2]][pos[3]].object.handle is "wall":
 						self.gridObj.grid[pos[2]][pos[3]].object = "empty"
 				else:				
-					self.gridObj.grid[pos[2]][pos[3]].recieveObject(Wall.Wall(pos[2], pos[3], pos[0], pos[1], 0))
+					self.gridObj.receiveObject(Wall.Wall(pos[2], pos[3], pos[0], pos[1], 0))
+					
 	
 			
 		return False

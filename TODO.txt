@@ -2,10 +2,10 @@
 
 
 """
-Bases\Spawners
-Minion pathing
-Wall placement
+Bases\Spawners WIP
+Minion pathing WIP
+Wall placement DONE
 
-++minion combat
-++directories
+++minion combat WIP
+++directories DONE
 """

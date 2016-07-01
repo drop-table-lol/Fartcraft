@@ -13,6 +13,8 @@ class Grid:
 		self.widthTiles = 21
 		self.grid = []
 		self.initialize()
+		self.scrollX = 0
+		self.scrollY = 0
 		
 
 	
@@ -44,6 +46,8 @@ class Grid:
 				if self.grid[i][j].object is not "empty": #Check each tile for an object
 					if self.grid[i][j].objectCanMove() and self.grid[i][j].object.didMove is False: #See if it is can move
 						self.grid[i][j].moveObject(self) #Then move it
+					elif not self.grid[i][j].objectCanMove(): #Structures
+						self.grid[i][j].object.update()
 						
 						#######TODO #####
 						"""ADD Combat checks, as well as checks for vision and maybe towers/structures that don't move"""
@@ -71,8 +75,23 @@ class Grid:
 		for i in xrange(0, self.lengthTiles): #Need to use length and width tiles, because we're updating EVERYTHING, not just what's seen
 			for j in xrange(0, self.widthTiles):
 				if self.grid[i][j].object is not "empty": #Check each tile for an object	
-					self.grid[i][j].object.scroll(direction)		
+					self.grid[i][j].object.scroll(direction)	
+		if direction is "RIGHT":
+			self.scrollX += 1
+		elif direction is "LEFT":
+			self.scrollX -= 1
+		elif direction is "DOWN":
+			self.scrollY += 1
+		elif direction is "UP":
+			self.scrollY -= 1
 					
+					
+					
+	def receiveObject(self, obj):
+		if self.grid[obj.x][obj.y].object is "empty":
+			self.grid[obj.x][obj.y].receiveObject(obj)
+		else:
+			pass
 					
 					
 					
@@ -98,7 +117,7 @@ class Tile:
 	
 	"""This eliminates reaching into other's lists, (interface),
 	as well as an ability for the map or others to spawn stuff"""
-	def recieveObject(self, Obj): 
+	def receiveObject(self, Obj): 
 		self.object = Obj
 	
 	def objectCanMove(self):
@@ -112,6 +131,8 @@ class Tile:
 		direction = self.object.direction #To see in what direction
 		moved = self.object.hasMoved() #To ensure we move at least once. (But not more)
 		
+	
+		
 
 		#RIGHT
 		if direction == "RIGHT" and self.object.hasMoved() is False: #Check x+1 through x+speed    TODO ----
@@ -119,10 +140,10 @@ class Tile:
 				if owner.tileIsWalkable(self.x+speed, self.y):
 					self.object.moved(True)
 					self.object.moveRight()
-					owner.grid[self.x+speed][self.y].recieveObject(self.object) #Send the object on it's way
+					owner.receiveObject(self.object) #Send the object on it's way
 					self.object = "empty" # Remove the object that is no longer occupying the space
 					
-				elif not owner.tileIsWalkable(self.x+speed, self.y) and owner.grid[self.x+speed][self.y].object.handle is not "wall":#We couldn't move there, but can we attack it?
+				elif not owner.tileIsWalkable(self.x+speed, self.y) and owner.grid[self.x+speed][self.y].object.team is not self.object.team:#We couldn't move there, but can we attack it?
 					Combat.meleeCombat(self.object, owner.grid[self.x+speed][self.y].object, owner)
 				else: #Right didn't work, due to collision or edge of map
 					self.object.getRandomDirection() #Collision
@@ -136,10 +157,10 @@ class Tile:
 				if owner.tileIsWalkable(self.x-speed, self.y):
 					self.object.moved(True)
 					self.object.moveLeft()#Update XorY value
-					owner.grid[self.x-speed][self.y].recieveObject(self.object) #Send the object on it's way
+					owner.receiveObject(self.object) #Send the object on it's way
 					self.object = "empty" # Remove the object that is no longer occupying the space
 					
-				elif not owner.tileIsWalkable(self.x-speed, self.y) and owner.grid[self.x-speed][self.y].object.handle is not "wall":#We couldn't move there, but can we attack it?
+				elif not owner.tileIsWalkable(self.x-speed, self.y) and owner.grid[self.x-speed][self.y].object.team is not self.object.team:#We couldn't move there, but can we attack it?
 					Combat.meleeCombat(self.object, owner.grid[self.x-speed][self.y].object, owner)
 
 				else: #Left didn't work, due to collision or edge of map 
@@ -154,10 +175,10 @@ class Tile:
 				if owner.tileIsWalkable(self.x, self.y+speed):
 					self.object.moved(True)
 					self.object.moveDown()#Update XorY value
-					owner.grid[self.x][self.y+speed].recieveObject(self.object) #Send the object on it's way
+					owner.receiveObject(self.object) #Send the object on it's way
 					self.object = "empty" # Remove the object that is no longer occupying the space
 					
-				elif not owner.tileIsWalkable(self.x, self.y+speed) and owner.grid[self.x][self.y+speed].object.handle is not "wall":#We couldn't move there, but can we attack it?
+				elif not owner.tileIsWalkable(self.x, self.y+speed) and owner.grid[self.x][self.y+speed].object.team is not self.object.team:#We couldn't move there, but can we attack it?
 					Combat.meleeCombat(self.object, owner.grid[self.x][self.y+speed].object, owner)
 					
 				else: #Down didn't work, due to collision or edge of map 
@@ -172,10 +193,10 @@ class Tile:
 				if owner.tileIsWalkable(self.x, self.y-speed):
 					self.object.moved(True)
 					self.object.moveUp()#Update XorY value
-					owner.grid[self.x][self.y-speed].recieveObject(self.object) #Send the object on it's way
+					owner.receiveObject(self.object) #Send the object on it's way
 					self.object = "empty" # Remove the object that is no longer occupying the space
 					
-				elif not owner.tileIsWalkable(self.x, self.y-speed) and owner.grid[self.x][self.y-speed].object.handle is not "wall":#We couldn't move there, but can we attack it?
+				elif not owner.tileIsWalkable(self.x, self.y-speed) and owner.grid[self.x][self.y-speed].object.team is not self.object.team:#We couldn't move there, but can we attack it?
 					Combat.meleeCombat(self.object, owner.grid[self.x][self.y-speed].object, owner)
 					
 				else: #Up didn't work due to collision (OR EDGE OF MAP)

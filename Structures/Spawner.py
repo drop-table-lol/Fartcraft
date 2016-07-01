@@ -2,12 +2,13 @@
 import pygame
 import Sprites
 from Displays import Display
+from Minions import Minion
 
-BASE_HEALTH = 5
+BASE_HEALTH = 500
 
 class Spawner:
 	
-	def __init__(self, x, y, team):
+	def __init__(self, x, y, team, gridObj):
 		self.handle = "spawner"
 		self.team = team
 		self.x = x
@@ -16,16 +17,16 @@ class Spawner:
 		self.screenY = y
 		self.size = Display.TILE_SIZE
 		self.rect = pygame.Rect(self.x, self.y, self.size, self.size)
-		self.screenX = x
-		self.screenY = y
 		self.sprite = Sprites.spr_crabSpawner
+		self.gridObj = gridObj #Needed to know where to spawn our minions
+		self.turns = 0
 		
 		self.health = BASE_HEALTH
 		self.speed = 0
 		self.initiative = 0
-		self.defense = 0
+		self.defense = 2
 		self.attacks = 0
-		self.damage = 0
+		self.damage = 1
 		self.isDead = False
 		
 		
@@ -34,13 +35,15 @@ class Spawner:
 	def draw(self):
 		self.updateRect()
 		Display.CANVAS.blit(self.sprite, self.rect)
+
 		
 	def updateRect(self):
 		self.rect = pygame.Rect(self.screenX*Display.TILE_SIZE, self.screenY*Display.TILE_SIZE, self.size, self.size)
-		
+
 	def update(self):
-		self.draw()
-		#Check for combat!
+		self.turns += 1
+		if self.turns % 90 is 0: #Every three seconds
+			self.spawnMinion()
 		
 	def moved(self, bool):
 		pass
@@ -77,6 +80,14 @@ class Spawner:
 		
 		
 		
-		
-		
+	#SPAWNING--------------------------------------------
+	def spawnMinion(self):
+		if self.team is 0: #Spawn to the right
+			print "team 1 spawns at %s, %s" % (self.x+1, self.y)
+			M = Minion.Minion(self.x+1, self.y, self.x-self.gridObj.scrollX+1, self.y+self.gridObj.scrollY, self.team)
+			self.gridObj.receiveObject(M)
+		elif self.team is 1: #Spawn to the left
+			print "team 2 spawsn at %s, %s" % (self.x-1, self.y)
+			M = Minion.Minion(self.x-1, self.y, self.x-self.gridObj.scrollX-1, self.y+self.gridObj.scrollY, self.team)
+			self.gridObj.receiveObject(M)
 		

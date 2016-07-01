@@ -7,13 +7,13 @@ import Sprites
 
 class Minion:
 	
-	def __init__(self, x, y, team):
+	def __init__(self, x, y, scrollX, scrollY, team):
 		#DRAWING-----------------------------------------
 		self.handle = "minion"
 		self.x = x
 		self.y = y
-		self.screenX = x
-		self.screenY = y
+		self.screenX = scrollX
+		self.screenY = scrollY
 		self.size = Display.TILE_SIZE
 		self.rect = pygame.Rect(self.x, self.y, self.size, self.size)
 		self.team = team
