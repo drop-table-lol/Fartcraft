@@ -88,16 +88,18 @@ class Minion:
 		
 		
 	def getRandomDirection(self):
-		randNum = random.randint(0, 4)
-		if randNum == 0:
-			self.direction = "UP"
-		elif randNum == 1:
-			self.direction = "DOWN"
-		elif randNum == 2:
-			self.direction = "LEFT"
-		elif randNum == 3:
-			self.direction = "RIGHT"
-			
+		oldDir = self.direction
+		while oldDir == self.direction:
+			randNum = random.randint(0, 4)
+			if randNum == 0:
+				self.direction = "UP"
+			elif randNum == 1:
+				self.direction = "DOWN"
+			elif randNum == 2:
+				self.direction = "LEFT"
+			elif randNum == 3:
+				self.direction = "RIGHT"
+				
 	def moveDown(self):
 		self.y += self.speed
 		self.screenY += self.speed
