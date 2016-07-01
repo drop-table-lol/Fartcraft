@@ -130,76 +130,78 @@ class Tile:
 		speed = self.object.getSpeed() #To see how many tiles we need to check
 		direction = self.object.direction #To see in what direction
 		moved = self.object.hasMoved() #To ensure we move at least once. (But not more)
-		
+		if self.object.handle is not "hero":
 	
-		
+			#RIGHT
+			if direction == "RIGHT" and self.object.hasMoved() is False: #Check x+1 through x+speed    TODO ----
+				if self.x+speed < owner.widthTiles: 
+					if owner.tileIsWalkable(self.x+speed, self.y):
+						self.object.moved(True)
+						self.object.moveRight()
+						owner.receiveObject(self.object) #Send the object on it's way
+						self.object = "empty" # Remove the object that is no longer occupying the space
+						
+					elif not owner.tileIsWalkable(self.x+speed, self.y) and owner.grid[self.x+speed][self.y].object.team is not self.object.team:#We couldn't move there, but can we attack it?
+						Combat.meleeCombat(self.object, owner.grid[self.x+speed][self.y].object, owner)
+					else: #Right didn't work, due to collision or edge of map
+						self.object.getRandomDirection() #Collision
+				else:
+					self.object.getRandomDirection()#Edge of world
+			
+			
+			#LEFT
+			elif direction == "LEFT" and self.object.hasMoved() is False:
+				if self.x-speed >= 0:
+					if owner.tileIsWalkable(self.x-speed, self.y):
+						self.object.moved(True)
+						self.object.moveLeft()#Update XorY value
+						owner.receiveObject(self.object) #Send the object on it's way
+						self.object = "empty" # Remove the object that is no longer occupying the space
+						
+					elif not owner.tileIsWalkable(self.x-speed, self.y) and owner.grid[self.x-speed][self.y].object.team is not self.object.team:#We couldn't move there, but can we attack it?
+						Combat.meleeCombat(self.object, owner.grid[self.x-speed][self.y].object, owner)
 
-		#RIGHT
-		if direction == "RIGHT" and self.object.hasMoved() is False: #Check x+1 through x+speed    TODO ----
-			if self.x+speed < owner.widthTiles: 
-				if owner.tileIsWalkable(self.x+speed, self.y):
-					self.object.moved(True)
-					self.object.moveRight()
-					owner.receiveObject(self.object) #Send the object on it's way
-					self.object = "empty" # Remove the object that is no longer occupying the space
-					
-				elif not owner.tileIsWalkable(self.x+speed, self.y) and owner.grid[self.x+speed][self.y].object.team is not self.object.team:#We couldn't move there, but can we attack it?
-					Combat.meleeCombat(self.object, owner.grid[self.x+speed][self.y].object, owner)
-				else: #Right didn't work, due to collision or edge of map
-					self.object.getRandomDirection() #Collision
-			else:
-				self.object.getRandomDirection()#Edge of world
-		
-		
-		#LEFT
-		elif direction == "LEFT" and self.object.hasMoved() is False:
-			if self.x-speed >= 0:
-				if owner.tileIsWalkable(self.x-speed, self.y):
-					self.object.moved(True)
-					self.object.moveLeft()#Update XorY value
-					owner.receiveObject(self.object) #Send the object on it's way
-					self.object = "empty" # Remove the object that is no longer occupying the space
-					
-				elif not owner.tileIsWalkable(self.x-speed, self.y) and owner.grid[self.x-speed][self.y].object.team is not self.object.team:#We couldn't move there, but can we attack it?
-					Combat.meleeCombat(self.object, owner.grid[self.x-speed][self.y].object, owner)
-
-				else: #Left didn't work, due to collision or edge of map 
-					self.object.getRandomDirection() #Collision
-			else:
-				self.object.getRandomDirection() #Edge of world
-				
-				
-		#DOWN		
-		elif direction == "DOWN" and self.object.hasMoved() is False:
-			if self.y + speed < owner.lengthTiles:
-				if owner.tileIsWalkable(self.x, self.y+speed):
-					self.object.moved(True)
-					self.object.moveDown()#Update XorY value
-					owner.receiveObject(self.object) #Send the object on it's way
-					self.object = "empty" # Remove the object that is no longer occupying the space
-					
-				elif not owner.tileIsWalkable(self.x, self.y+speed) and owner.grid[self.x][self.y+speed].object.team is not self.object.team:#We couldn't move there, but can we attack it?
-					Combat.meleeCombat(self.object, owner.grid[self.x][self.y+speed].object, owner)
-					
-				else: #Down didn't work, due to collision or edge of map 
-					self.object.getRandomDirection() #Collision
-			else:
-				self.object.getRandomDirection() #Edge of world
+					else: #Left didn't work, due to collision or edge of map 
+						self.object.getRandomDirection() #Collision
+				else:
+					self.object.getRandomDirection() #Edge of world
 					
 					
-		#UP			
-		elif direction == "UP" and self.object.hasMoved() is False:
-			if self.y-speed >= 0:
-				if owner.tileIsWalkable(self.x, self.y-speed):
-					self.object.moved(True)
-					self.object.moveUp()#Update XorY value
-					owner.receiveObject(self.object) #Send the object on it's way
-					self.object = "empty" # Remove the object that is no longer occupying the space
+			#DOWN		
+			elif direction == "DOWN" and self.object.hasMoved() is False:
+				if self.y + speed < owner.lengthTiles:
+					if owner.tileIsWalkable(self.x, self.y+speed):
+						self.object.moved(True)
+						self.object.moveDown()#Update XorY value
+						owner.receiveObject(self.object) #Send the object on it's way
+						self.object = "empty" # Remove the object that is no longer occupying the space
+						
+					elif not owner.tileIsWalkable(self.x, self.y+speed) and owner.grid[self.x][self.y+speed].object.team is not self.object.team:#We couldn't move there, but can we attack it?
+						Combat.meleeCombat(self.object, owner.grid[self.x][self.y+speed].object, owner)
+						
+					else: #Down didn't work, due to collision or edge of map 
+						self.object.getRandomDirection() #Collision
+				else:
+					self.object.getRandomDirection() #Edge of world
+						
+						
+			#UP			
+			elif direction == "UP" and self.object.hasMoved() is False:
+				if self.y-speed >= 0:
+					if owner.tileIsWalkable(self.x, self.y-speed):
+						self.object.moved(True)
+						self.object.moveUp()#Update XorY value
+						owner.receiveObject(self.object) #Send the object on it's way
+						self.object = "empty" # Remove the object that is no longer occupying the space
+						
+					elif not owner.tileIsWalkable(self.x, self.y-speed) and owner.grid[self.x][self.y-speed].object.team is not self.object.team:#We couldn't move there, but can we attack it?
+						Combat.meleeCombat(self.object, owner.grid[self.x][self.y-speed].object, owner)
+						
+					else: #Up didn't work due to collision (OR EDGE OF MAP)
+						self.object.getRandomDirection() #Collision
+				else:
+					self.object.getRandomDirection()#Edge of world
 					
-				elif not owner.tileIsWalkable(self.x, self.y-speed) and owner.grid[self.x][self.y-speed].object.team is not self.object.team:#We couldn't move there, but can we attack it?
-					Combat.meleeCombat(self.object, owner.grid[self.x][self.y-speed].object, owner)
-					
-				else: #Up didn't work due to collision (OR EDGE OF MAP)
-					self.object.getRandomDirection() #Collision
-			else:
-				self.object.getRandomDirection()#Edge of world
+		else:
+			pass
+			

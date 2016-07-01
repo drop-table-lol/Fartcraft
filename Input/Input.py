@@ -10,10 +10,11 @@ from Structures import Wall
 
 class Input:
 
-	def __init__(self, screenObj, gridObj):
+	def __init__(self, screenObj, gridObj, heroObj):
 	
 		self.screenObj = screenObj
 		self.gridObj = gridObj
+		self.heroObj = heroObj
 		self.xScroll = 0
 		self.yScroll = 0 	#These two vars should allow us to keep track of the number of scrolls,
 							#Allowing us to then pass the param to build-to-click stuff, 
@@ -22,6 +23,7 @@ class Input:
 		""" Input event handler """
 		for event in pygame.event.get():
 			if event.type == KEYDOWN:
+				#Scrolling
 				if event.key == K_a and self.screenObj.canScroll("LEFT"):
 					self.screenObj.scroll("LEFT");
 					self.gridObj.scroll("LEFT")
@@ -38,6 +40,18 @@ class Input:
 					self.screenObj.scroll("UP");
 					self.gridObj.scroll("UP")
 					self.yScroll -= 1
+				#Hero Control	
+				elif event.key == K_UP:
+					self.heroObj.moveUp()
+				elif event.key == K_DOWN:
+					self.heroObj.moveDown()
+				elif event.key == K_LEFT:
+					self.heroObj.moveLeft()
+				elif event.key == K_RIGHT:
+					self.heroObj.moveRight()
+				
+					
+					
 				if event.key == K_ESCAPE:
 					return True
 			if event.type == pygame.MOUSEBUTTONDOWN:

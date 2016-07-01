@@ -6,6 +6,7 @@ from Grids import Grid
 from Input import Input
 from Player import Player
 from Minions import Minion
+from Minions import Hero
 from Structures import Spawner
 from Structures import Wall
 from Structures import Tower
@@ -28,8 +29,9 @@ class Game:
 		#Pre-initializations
 		gridObj = Grid.Grid()
 		screenObj = Display.Screen(gridObj)
-		inputObj = Input.Input(screenObj, gridObj)
-		pygame.mouse.set_visible(False)#Cause we want our own sweet image...
+		Jdogg = Hero.Hero(1, 1, 1, 1, 0)
+		inputObj = Input.Input(screenObj, gridObj, Jdogg)
+		pygame.mouse.set_visible(False)#Cause we want our own dank image...
 		
 		
 		#Actually Setting up the game
@@ -37,8 +39,9 @@ class Game:
 		
 		SPW = Spawner.Spawner(0, 0, 0, gridObj)
 		NotSPW = Spawner.Spawner(20, 0, 1, gridObj)
-		gridObj.grid[0][0].receiveObject(SPW)
-		gridObj.grid[20][0].receiveObject(NotSPW)
+		gridObj.receiveObject(SPW)
+		gridObj.receiveObject(NotSPW)
+		gridObj.receiveObject(Jdogg)
 	
 		
 		#Game Loop follows
@@ -55,6 +58,7 @@ class Game:
 			gridObj.resetObjects()
 			turns += 1
 			gridObj.corpseCleanup()
+			Jdogg.draw()
 			
 			
 			

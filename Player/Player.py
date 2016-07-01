@@ -52,8 +52,9 @@ class Player:
 				
 class PlayerHandler:
 	def __init__(self, gridObj, screenObj):
-		self.playerObj = Player(screenObj, gridObj, 0, 0, Sprites.spr_player)
+		self.playerObj = Player(screenObj, gridObj, 1, 1, Sprites.spr_player)
 		self.gridObj = gridObj
+		self.gridObj.receiveObject(self.playerObj)
 		self.screenObj = screenObj
 		self.playerHasMoved = False
 		
