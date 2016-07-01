@@ -43,7 +43,6 @@ class Grid:
 			for j in xrange(0, self.widthTiles):
 				if self.grid[i][j].object is not "empty": #Check each tile for an object
 					if self.grid[i][j].objectCanMove() and self.grid[i][j].object.didMove is False: #See if it is can move
-						print "Moving from %s, %s" % (i, j)
 						self.grid[i][j].moveObject(self) #Then move it
 						
 						#######TODO #####
@@ -122,7 +121,6 @@ class Tile:
 					self.object.moveRight()
 					owner.grid[self.x+speed][self.y].recieveObject(self.object) #Send the object on it's way
 					self.object = "empty" # Remove the object that is no longer occupying the space
-					print "right"
 					
 				elif not owner.tileIsWalkable(self.x+speed, self.y) and owner.grid[self.x+speed][self.y].object.handle is not "wall":#We couldn't move there, but can we attack it?
 					Combat.meleeCombat(self.object, owner.grid[self.x+speed][self.y].object, owner)
@@ -140,7 +138,6 @@ class Tile:
 					self.object.moveLeft()#Update XorY value
 					owner.grid[self.x-speed][self.y].recieveObject(self.object) #Send the object on it's way
 					self.object = "empty" # Remove the object that is no longer occupying the space
-					print "left"
 					
 				elif not owner.tileIsWalkable(self.x-speed, self.y) and owner.grid[self.x-speed][self.y].object.handle is not "wall":#We couldn't move there, but can we attack it?
 					Combat.meleeCombat(self.object, owner.grid[self.x-speed][self.y].object, owner)
@@ -159,7 +156,6 @@ class Tile:
 					self.object.moveDown()#Update XorY value
 					owner.grid[self.x][self.y+speed].recieveObject(self.object) #Send the object on it's way
 					self.object = "empty" # Remove the object that is no longer occupying the space
-					print "down"
 					
 				elif not owner.tileIsWalkable(self.x, self.y+speed) and owner.grid[self.x][self.y+speed].object.handle is not "wall":#We couldn't move there, but can we attack it?
 					Combat.meleeCombat(self.object, owner.grid[self.x][self.y+speed].object, owner)
@@ -178,7 +174,6 @@ class Tile:
 					self.object.moveUp()#Update XorY value
 					owner.grid[self.x][self.y-speed].recieveObject(self.object) #Send the object on it's way
 					self.object = "empty" # Remove the object that is no longer occupying the space
-					print "up"
 					
 				elif not owner.tileIsWalkable(self.x, self.y-speed) and owner.grid[self.x][self.y-speed].object.handle is not "wall":#We couldn't move there, but can we attack it?
 					Combat.meleeCombat(self.object, owner.grid[self.x][self.y-speed].object, owner)

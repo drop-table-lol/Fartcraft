@@ -17,6 +17,5 @@ def calculateTile(xScroll, yScroll):
 	scrollX = position[0] / Display.TILE_SIZE + xScroll
 	scrollY = position[1] / Display.TILE_SIZE + yScroll
 
-	print "truex %s, truey %s and then scrollx %s, scrolly %s" % (trueX, trueY, scrollX, scrollY)
 	return (trueX, trueY, scrollX, scrollY)
 	
