@@ -37,8 +37,8 @@ class Game:
 		#Actually Setting up the game
 		DopeAssTower = Tower.Tower(2, 2, 0)
 		
-		SPW = Spawner.Spawner(0, 0, 0, gridObj)
-		NotSPW = Spawner.Spawner(20, 0, 1, gridObj)
+		SPW = Spawner.Spawner(0, 10, 0, gridObj)
+		NotSPW = Spawner.Spawner(20, 10, 1, gridObj)
 		gridObj.receiveObject(SPW)
 		gridObj.receiveObject(NotSPW)
 		gridObj.receiveObject(Jdogg)
@@ -49,19 +49,25 @@ class Game:
 		screenObj.update()
 		pygame.display.update()
 		done = False
+		minionWait = 10
+		minionMove = minionWait # when this incremental timer reaches minionWait, minions move
 		turns = 1
 		sac = Sprites.spr_cursor
 		while not done:
-		
-			gridObj.updateObjects()
-			done = inputObj.update()
 			screenObj.update()
+			gridObj.updateObjects(minionMove == minionWait)
+			done = inputObj.update()
+			
 			gridObj.resetObjects()
 			turns += 1
 			gridObj.corpseCleanup()
 			Jdogg.draw()
 			
-			
+			# reset variables
+			if minionMove == minionWait:
+				minionMove = 0
+			else:
+				minionMove += 1
 			
 			#Cursor shit
 			cursor = pygame.mouse.get_pos()

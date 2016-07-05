@@ -8,6 +8,7 @@ import pygame
 spr_ground1 = pygame.image.load('PNG'+ os.sep+'spr_ground1.png')
 spr_ground2 = pygame.image.load('PNG'+ os.sep+'spr_ground2.png')
 spr_ground3 = pygame.image.load('PNG'+ os.sep+'spr_ground3.png')
+spr_corpse = pygame.image.load('PNG'+ os.sep+'spr_corpse.png')
 GROUND_SPRITES = [spr_ground1, spr_ground2, spr_ground3]
 
 

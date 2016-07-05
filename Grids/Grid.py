@@ -40,12 +40,12 @@ class Grid:
 		else:
 			return True
 		
-	def updateObjects(self):
+	def updateObjects(self, moveMinions):
 		for i in xrange(0, self.lengthTiles): #Need to use length and width tiles, because we're updating EVERYTHING, not just what's seen
 			for j in xrange(0, self.widthTiles):
 				self.grid[i][j].update()
 				if self.grid[i][j].object is not "empty": #Check each tile for an object
-					if self.grid[i][j].objectCanMove() and self.grid[i][j].object.didMove is False: #See if it is can move
+					if moveMinions and self.grid[i][j].objectCanMove() and self.grid[i][j].object.didMove is False: #See if it is can move and if it is their turn
 						self.grid[i][j].moveObject(self) #Then move it
 					elif not self.grid[i][j].objectCanMove(): #Structures
 						self.grid[i][j].object.update()
@@ -70,6 +70,7 @@ class Grid:
 				if self.grid[i][j].object is not "empty": #Check each tile for an object	
 					if self.grid[i][j].object.isDead is True:
 						self.grid[i][j].object = "empty" #CLEAN up those nasty corpses before they get more nasty
+						self.grid[i][j].changeSprite(Sprites.spr_corpse)
 					
 					
 	def scroll(self, direction):
@@ -125,7 +126,9 @@ class Tile:
 			pass
 		else:
 			self.object.update()
-		
+	
+	def changeSprite(self, sprite):
+		self.sprite = sprite
 	
 	"""This eliminates reaching into other's lists, (interface),
 	as well as an ability for the map or others to spawn stuff"""

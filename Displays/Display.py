@@ -23,6 +23,7 @@ BROWN = (210, 105, 30)
 BLACK = (0, 0, 0)
 GREY = (93, 95, 96)
 GOLD = (246, 255, 0)
+GRASS_GREEN = (73, 170, 16)
 
 ALL_COLORS = [RED, ORANGE, YELLOW, GREEN, BLUE, TEAL, PURPLE, WHITE, BROWN, BLACK, GREY, GOLD]
 
@@ -42,7 +43,7 @@ class Screen:
 		self.gridObj = gridObj
 		
 	def update(self):
-		CANVAS.fill(TEAL)
+		CANVAS.fill(GRASS_GREEN)
 		self.gridObj.draw(self.x, self.y, self.x + self.width, self.y + self.height)
 	
 	def scroll(self, direction):
