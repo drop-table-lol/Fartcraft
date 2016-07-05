@@ -40,12 +40,12 @@ class Grid:
 		else:
 			return True
 		
-	def updateObjects(self, moveMinions):
+	def updateObjects(self):
 		for i in xrange(0, self.lengthTiles): #Need to use length and width tiles, because we're updating EVERYTHING, not just what's seen
 			for j in xrange(0, self.widthTiles):
 				self.grid[i][j].update()
 				if self.grid[i][j].object is not "empty": #Check each tile for an object
-					if moveMinions and self.grid[i][j].objectCanMove() and self.grid[i][j].object.didMove is False: #See if it is can move and if it is their turn
+					if self.grid[i][j].objectCanMove() and self.grid[i][j].object.didMove is False: #See if it is can move and if it is their turn
 						self.grid[i][j].moveObject(self) #Then move it
 					elif not self.grid[i][j].objectCanMove(): #Structures
 						self.grid[i][j].object.update()
@@ -124,6 +124,8 @@ class Tile:
 		self.text = pygame.font.SysFont("monospace", 12).render("(" + str(x) + "," + str(y) + ")", 1, (0,0,0))
 		self.object = "empty" #This will contain the unit, structure, or whatever that goes on this tile.
 		self.animation = "empty"
+		self.ticker = 0 #So corpses clean up
+		self.corpse = False
 	
 	def draw(self, displayX, displayY):
 		drawRect = pygame.Rect(displayX*Display.TILE_SIZE, displayY*Display.TILE_SIZE, Display.TILE_SIZE, Display.TILE_SIZE)
@@ -139,9 +141,17 @@ class Tile:
 			pass
 		else:
 			self.object.update()
-	
+			
+		if self.corpse is True:
+			self.ticker += 1
+			if self.ticker is 30: #one second has gone by
+				self.changeSprite(Sprites.GROUND_SPRITES[random.randint(0, len(Sprites.GROUND_SPRITES) - 1)]) #change it back
+				self.ticker = 0
+				self.corpse = False
+				
 	def changeSprite(self, sprite):
 		self.sprite = sprite
+		self.corpse = True
 	
 	"""This eliminates reaching into other's lists, (interface),
 	as well as an ability for the map or others to spawn stuff"""

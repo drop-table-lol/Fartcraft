@@ -53,18 +53,13 @@ class Game:
 		screenObj.update()
 		pygame.display.update()
 		done = False
-		minionWait = 10
-		minionMove = minionWait # when this incremental timer reaches minionWait, minions move
 		turns = 1
 		sac = Sprites.spr_cursor
 		while not done:
 		
-			input = raw_input(">>>")
-			gridObj.updateObjects()
 			done = inputObj.update()
-
 			screenObj.update()
-			gridObj.updateObjects(minionMove == minionWait)
+			gridObj.updateObjects()
 			done = inputObj.update()
 			
 			gridObj.resetObjects()
@@ -72,11 +67,7 @@ class Game:
 			gridObj.corpseCleanup()
 			Jdogg.draw()
 			
-			# reset variables
-			if minionMove == minionWait:
-				minionMove = 0
-			else:
-				minionMove += 1
+
 			
 			
 			#Cursor shit
