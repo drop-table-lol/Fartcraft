@@ -40,11 +40,13 @@ class Grid:
 		else:
 			return True
 		
-	def updateObjects(self):
+	def updateObjects(self, dontMoveThisObject = None): # if dontMoveThisObject is passed, then dont allow it to move
 		for i in xrange(0, self.lengthTiles): #Need to use length and width tiles, because we're updating EVERYTHING, not just what's seen
 			for j in xrange(0, self.widthTiles):
 				self.grid[i][j].update()
 				if self.grid[i][j].object is not "empty": #Check each tile for an object
+					if dontMoveThisObject != None and dontMoveThisObject != self.grid[i][j].object.handle: # dont update this object if an object handle is passed and this object is not it
+						continue
 					if self.grid[i][j].objectCanMove() and self.grid[i][j].object.didMove is False: #See if it is can move and if it is their turn
 						self.grid[i][j].moveObject(self) #Then move it
 					elif not self.grid[i][j].objectCanMove(): #Structures
@@ -174,7 +176,6 @@ class Tile:
 		direction = self.object.direction #To see in what direction
 		moved = self.object.hasMoved() #To ensure we move at least once. (But not more)
 		if self.object.handle is not "hero":
-	
 			#RIGHT
 			if direction == "RIGHT" and self.object.hasMoved() is False: #Check x+1 through x+speed    TODO ----
 				if self.x+speed < owner.widthTiles: 
@@ -243,8 +244,8 @@ class Tile:
 					else: #Up didn't work due to collision (OR EDGE OF MAP)
 						self.object.getRandomDirection() #Collision
 				else:
-					self.object.getRandomDirection()#Edge of world
-					
+					self.object.getRandomDirection()#Edge of world	
+		
 		else:
 			pass
 			

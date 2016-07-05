@@ -35,9 +35,10 @@ spr_minion1 = pygame.image.load('PNG'+ os.sep+'spr_minion1.png')
 
 #CrabSpawn
 spr_crab = pygame.image.load('PNG'+ os.sep+'CrabMinion0.png')
-
+spr_crab_left = pygame.transform.flip(spr_crab, True, False)
 #Sin Sity Slugs
 spr_slug = pygame.image.load('PNG'+ os.sep+'SlugMinion0.png')
+spr_slug_left = pygame.transform.flip(spr_slug, True, False)
 
 #GUI-----------------------------------------------------------
 #Menu

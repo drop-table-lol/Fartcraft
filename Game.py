@@ -48,6 +48,8 @@ class Game:
 		
 		#gridObj.receiveObject(DopeAssTower)
 	
+		# list of objects
+		allObjects = ["minion", "hero","spawner", "tower", "wall"]
 		
 		#Game Loop follows
 		screenObj.update()
@@ -58,24 +60,31 @@ class Game:
 		ticker = 0
 		while not done:
 		
-			ticker += 1
-			if ticker is 30:
+			
+			
+			if ticker % 60 is 0:  # all things update. all things move
 				done = inputObj.update()
 				screenObj.update()
 				gridObj.updateObjects()
 				done = inputObj.update()
-				
 				gridObj.resetObjects()
 				turns += 1
 				gridObj.corpseCleanup()
 				Jdogg.draw()
-				ticker = 0
-			else:
+			elif ticker % 30 is 0 : # all things update. all things move except minions
+				done = inputObj.update()
+				screenObj.update()
+				gridObj.updateObjects("minion")
+				done = inputObj.update()
+				gridObj.resetObjects()
+				turns += 1
+				gridObj.corpseCleanup()
+				Jdogg.draw()
+			else:					# only graphics update
 				screenObj.update()
 				done = inputObj.update()
 				Jdogg.draw()
-			
-			
+				
 			#Cursor shit
 			cursor = pygame.mouse.get_pos()
 			sweetAssCursor = pygame.Rect(cursor[0], cursor[1], Display.TILE_SIZE, Display.TILE_SIZE)
@@ -84,6 +93,7 @@ class Game:
 			#Screen shit
 			pygame.display.update()
 			Display.FPSCLOCK.tick(Display.FPS)
+			ticker += 1
 	
 
  

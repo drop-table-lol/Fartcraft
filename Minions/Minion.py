@@ -209,6 +209,7 @@ class Minion:
 	#LOGIC ------------------------------------------
 	def update(self): #TODO continue work on buffs logic
 		self.turns += 1
+		self.spriteUpdate()
 		if self.buffsActive:
 			tmps = [] #For collecting all the numbers we need to remove (so we don't change the list as we iterate)
 			for x in xrange(len(self.buffTurns)):
@@ -239,8 +240,22 @@ class Minion:
 				del self.activeBuffs[j]
 				del self.buffTurns[j]
 				del self.buffedAmmt[j]
-
-						
+	
+	def spriteUpdate(self):
+		if self.team is 2:
+			if self.direction == "LEFT" and self.sprite == Sprites.spr_crab:
+				self.sprite = Sprites.spr_crab_left
+			elif self.direction == "RIGHT" and self.sprite == Sprites.spr_crab_left:
+				self.sprite = Sprites.spr_crab
+		if self.team is 3:
+			
+			if self.direction == "LEFT" and self.sprite == Sprites.spr_slug:
+				self.sprite = Sprites.spr_slug_left
+			elif self.direction == "RIGHT" and self.sprite == Sprites.spr_slug_left:
+				self.sprite = Sprites.spr_slug
+		
+		
+		
 	def death(self):
 		print "I DIED"
 		self.isDead = True

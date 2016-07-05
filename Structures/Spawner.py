@@ -41,9 +41,9 @@ class Spawner:
 		self.rect = pygame.Rect(self.screenX*Display.TILE_SIZE, self.screenY*Display.TILE_SIZE, self.size, self.size)
 
 	def update(self):
-		self.turns += 1
 		if self.turns % 9 is 0: #Every three seconds
 			self.spawnMinion()
+		self.turns += 1
 		
 	def moved(self, bool):
 		pass
