@@ -37,8 +37,8 @@ class Game:
 		#Actually Setting up the game
 		DopeAssTower = Tower.Tower(2, 2, 0)
 		
-		SPW = Spawner.Spawner(0, 10, 0, gridObj)
-		NotSPW = Spawner.Spawner(20, 10, 1, gridObj)
+		SPW = Spawner.Spawner(0, 0, 0, gridObj)
+		NotSPW = Spawner.Spawner(20, 0, 1, gridObj)
 		gridObj.receiveObject(SPW)
 		gridObj.receiveObject(NotSPW)
 		gridObj.receiveObject(Jdogg)
