@@ -78,6 +78,12 @@ class Tower:
 		print "oh no! Tower down!"
 		self.isDead = True
 		
+	def buff(self, x,y,z):
+		pass #TODO, CAN WE BUFF Structures?
+		
+	def debuff(self,x,y,z):
+		pass
+		
 		
 		
 		

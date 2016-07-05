@@ -10,6 +10,7 @@ from Minions import Hero
 from Structures import Spawner
 from Structures import Wall
 from Structures import Tower
+from Animations import Animation
 import Sprites #For sweet ass cursor
 
 from pygame.locals import *
@@ -35,14 +36,17 @@ class Game:
 		
 		
 		#Actually Setting up the game
-		DopeAssTower = Tower.Tower(2, 2, 0)
+		#DopeAssTower = Tower.Tower(0, 0, 0)
 		
-		SPW = Spawner.Spawner(0, 0, 0, gridObj)
-		NotSPW = Spawner.Spawner(20, 0, 1, gridObj)
-		gridObj.receiveObject(SPW)
-		gridObj.receiveObject(NotSPW)
+		#SPW = Spawner.Spawner(0, 0, 0, gridObj)
+		SlugSPW = Spawner.Spawner(20, 0, 3, gridObj)
+		CrabSpawner = Spawner.Spawner(0, 0, 2, gridObj)
+		#gridObj.receiveObject(SPW)
+		gridObj.receiveObject(SlugSPW)
 		gridObj.receiveObject(Jdogg)
-		gridObj.receiveObject(DopeAssTower)
+		gridObj.receiveObject(CrabSpawner)
+		
+		#gridObj.receiveObject(DopeAssTower)
 	
 		
 		#Game Loop follows
@@ -54,6 +58,11 @@ class Game:
 		turns = 1
 		sac = Sprites.spr_cursor
 		while not done:
+		
+			input = raw_input(">>>")
+			gridObj.updateObjects()
+			done = inputObj.update()
+
 			screenObj.update()
 			gridObj.updateObjects(minionMove == minionWait)
 			done = inputObj.update()
@@ -68,6 +77,7 @@ class Game:
 				minionMove = 0
 			else:
 				minionMove += 1
+			
 			
 			#Cursor shit
 			cursor = pygame.mouse.get_pos()

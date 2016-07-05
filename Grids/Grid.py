@@ -50,8 +50,8 @@ class Grid:
 					elif not self.grid[i][j].objectCanMove(): #Structures
 						self.grid[i][j].object.update()
 						
-						#######TODO #####
-						"""ADD Combat checks, as well as checks for vision and maybe towers/structures that don't move"""
+				#######TODO #####
+				"""ADD Combat checks, as well as checks for vision and maybe towers/structures that don't move"""
 
 						
 	"""Here we reset all moved objects to a non-moved state, so that they may move again next turn.
@@ -72,6 +72,11 @@ class Grid:
 						self.grid[i][j].object = "empty" #CLEAN up those nasty corpses before they get more nasty
 						self.grid[i][j].changeSprite(Sprites.spr_corpse)
 					
+
+				if self.grid[i][j].animation is not "empty":
+					if self.grid[i][j].animation.isActive is False:
+						self.grid[i][j].animation = "empty"
+
 					
 	def scroll(self, direction):
 		for i in xrange(0, self.lengthTiles): #Need to use length and width tiles, because we're updating EVERYTHING, not just what's seen
@@ -98,6 +103,12 @@ class Grid:
 				pass
 			else:
 				self.grid[obj.x][obj.y].receiveObject(obj)
+				
+				
+	def receiveAnim(self, anim):
+		if self.grid[anim.x][anim.y].animation is "empty":
+			self.grid[anim.x][anim.y].receiveAnim(anim)
+			
 			
 					
 					
@@ -112,7 +123,7 @@ class Tile:
 		self.rect = pygame.Rect(self.x*Display.TILE_SIZE, self.y*Display.TILE_SIZE, Display.TILE_SIZE, Display.TILE_SIZE)
 		self.text = pygame.font.SysFont("monospace", 12).render("(" + str(x) + "," + str(y) + ")", 1, (0,0,0))
 		self.object = "empty" #This will contain the unit, structure, or whatever that goes on this tile.
-		#self.objects is a list, so that we don't have to have hasObject() as a function, instead we can say, if "tile.objects[]:"
+		self.animation = "empty"
 	
 	def draw(self, displayX, displayY):
 		drawRect = pygame.Rect(displayX*Display.TILE_SIZE, displayY*Display.TILE_SIZE, Display.TILE_SIZE, Display.TILE_SIZE)
@@ -120,6 +131,8 @@ class Tile:
 		Display.CANVAS.blit(self.text, (displayX*Display.TILE_SIZE, displayY*Display.TILE_SIZE))
 		if self.object is not "empty":
 			self.object.draw()
+		if self.animation is not "empty":
+			self.animation.draw()
 			
 	def update(self):
 		if self.object is "empty":
@@ -134,6 +147,9 @@ class Tile:
 	as well as an ability for the map or others to spawn stuff"""
 	def receiveObject(self, Obj): 
 		self.object = Obj
+		
+	def receiveAnim(self, Anim):
+		self.animation = Anim
 	
 	def objectCanMove(self):
 		if self.object.getSpeed() > 0:

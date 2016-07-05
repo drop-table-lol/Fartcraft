@@ -28,12 +28,24 @@ spr_tower0 = pygame.image.load('PNG'+ os.sep+'spr_tower0.png')
 spr_player = pygame.image.load('PNG'+ os.sep+'spr_player.png')
 
 #Minions
+
+#HellSpawn
 spr_minion = pygame.image.load('PNG'+ os.sep+'spr_minion.png')
 spr_minion1 = pygame.image.load('PNG'+ os.sep+'spr_minion1.png')
 
+#CrabSpawn
+spr_crab = pygame.image.load('PNG'+ os.sep+'CrabMinion0.png')
+
+#Sin Sity Slugs
+spr_slug = pygame.image.load('PNG'+ os.sep+'SlugMinion0.png')
 
 #GUI-----------------------------------------------------------
 #Menu
 spr_menu = pygame.image.load('PNG'+ os.sep+'Menu.png')
 #SweetCursorofgoodness...
 spr_cursor = pygame.image.load('PNG'+os.sep+'Cursor.png')
+
+
+#Attacks--------------------------------------------------------
+spr_slash = pygame.image.load('PNG'+os.sep+'spr_slash1.png')
+spr_arrows = pygame.image.load('PNG'+os.sep+'spr_arrows.png')

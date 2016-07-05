@@ -77,6 +77,12 @@ class Spawner:
 		print "oh no! spawner down!"
 		self.isDead = True
 		
+	def buff(self, x,y,z):
+		pass #TODO, CAN WE BUFF Structures?
+		
+	def debuff(self,x,y,z):
+		pass
+		
 		
 		
 		
@@ -90,4 +96,16 @@ class Spawner:
 			print "team 2 spawsn at %s, %s" % (self.x-1, self.y)
 			M = Minion.Minion(self.x-1, self.y, self.x-self.gridObj.scrollX-1, self.y+self.gridObj.scrollY, self.team)
 			self.gridObj.receiveObject(M)
+		
+		if self.team is 2: #Crab
+			print "team 3 spawns at %s, %s" % (self.x+1, self.y)
+			M = Minion.Minion(self.x+1, self.y, self.x-self.gridObj.scrollX+1, self.y+self.gridObj.scrollY, self.team)
+			self.gridObj.receiveObject(M)
+			
+		if self.team is 3: #Slug
+			print "team 4 spawns at %s, %s" % (self.x-1, self.y)
+			M = Minion.Minion(self.x-1, self.y, self.x-self.gridObj.scrollX-1, self.y+self.gridObj.scrollY, self.team)
+			self.gridObj.receiveObject(M)
+			
+			
 		

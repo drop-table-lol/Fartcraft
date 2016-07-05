@@ -25,11 +25,20 @@ class Minion:
 			self.sprite = Sprites.spr_minion
 		if self.team is 1:
 			self.sprite = Sprites.spr_minion1
+		if self.team is 2:
+			self.sprite = Sprites.spr_crab
+		if self.team is 3:
+			self.sprite = Sprites.spr_slug
+		self.timer = 0
 		
 		#MOVEMENT-----------------------------------------
 		if self.team is 0:
 			self.direction = "RIGHT"
 		elif self.team is 1:
+			self.direction = "LEFT"
+		elif self.team is 2:
+			self.direction = "RIGHT"
+		elif self.team is 3:
 			self.direction = "LEFT"
 		
 		self.didMove = False
