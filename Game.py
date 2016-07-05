@@ -55,19 +55,25 @@ class Game:
 		done = False
 		turns = 1
 		sac = Sprites.spr_cursor
+		ticker = 0
 		while not done:
 		
-			done = inputObj.update()
-			screenObj.update()
-			gridObj.updateObjects()
-			done = inputObj.update()
-			
-			gridObj.resetObjects()
-			turns += 1
-			gridObj.corpseCleanup()
-			Jdogg.draw()
-			
-
+			ticker += 1
+			if ticker is 30:
+				done = inputObj.update()
+				screenObj.update()
+				gridObj.updateObjects()
+				done = inputObj.update()
+				
+				gridObj.resetObjects()
+				turns += 1
+				gridObj.corpseCleanup()
+				Jdogg.draw()
+				ticker = 0
+			else:
+				screenObj.update()
+				done = inputObj.update()
+				Jdogg.draw()
 			
 			
 			#Cursor shit

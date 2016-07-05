@@ -124,8 +124,10 @@ class Tile:
 		self.text = pygame.font.SysFont("monospace", 12).render("(" + str(x) + "," + str(y) + ")", 1, (0,0,0))
 		self.object = "empty" #This will contain the unit, structure, or whatever that goes on this tile.
 		self.animation = "empty"
-		self.ticker = 0 #So corpses clean up
+		self.corpseTicker = 0 #So corpses clean up
 		self.corpse = False
+		self.ticker = 0
+		
 	
 	def draw(self, displayX, displayY):
 		drawRect = pygame.Rect(displayX*Display.TILE_SIZE, displayY*Display.TILE_SIZE, Display.TILE_SIZE, Display.TILE_SIZE)
@@ -141,12 +143,12 @@ class Tile:
 			pass
 		else:
 			self.object.update()
-			
+		
 		if self.corpse is True:
-			self.ticker += 1
-			if self.ticker is 30: #one second has gone by
+			self.corpseTicker += 1
+			if self.corpseTicker is 30: #one second has gone by
 				self.changeSprite(Sprites.GROUND_SPRITES[random.randint(0, len(Sprites.GROUND_SPRITES) - 1)]) #change it back
-				self.ticker = 0
+				self.corpseTicker = 0
 				self.corpse = False
 				
 	def changeSprite(self, sprite):

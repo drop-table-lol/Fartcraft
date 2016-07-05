@@ -42,7 +42,7 @@ class Spawner:
 
 	def update(self):
 		self.turns += 1
-		if self.turns % 90 is 0: #Every three seconds
+		if self.turns % 9 is 0: #Every three seconds
 			self.spawnMinion()
 		
 	def moved(self, bool):
