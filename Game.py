@@ -17,6 +17,8 @@ import Sprites #For sweet ass cursor
 from pygame.locals import *
 import sys
 
+PLAYERTEAM = 2
+
 class Game:
 	def __init__(self):
 		pygame.init()
@@ -33,7 +35,7 @@ class Game:
 		gridObj = Grid.Grid()
 		screenObj = Display.Screen(gridObj)
 		Jdogg = Hero.Hero(1, 1, 1, 1, 0)
-		inputObj = Input.Input(screenObj, gridObj, Jdogg)
+		inputObj = Input.Input(screenObj, gridObj, Jdogg, PLAYERTEAM )
 		pygame.mouse.set_visible(False)#Cause we want our own dank image...
 		
 		
@@ -80,7 +82,7 @@ class Game:
 				screenObj.update()
 				pygame.display.update()
 				ConsoleObj.draw()
-				gridObj.updateObjects("minion")
+				gridObj.updateObjects()
 				done = inputObj.update()
 				gridObj.resetObjects()
 				turns += 1

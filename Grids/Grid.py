@@ -40,17 +40,22 @@ class Grid:
 		else:
 			return True
 		
-	def updateObjects(self, dontMoveThisObject = None): # if dontMoveThisObject is passed, then dont allow it to move
+	def updateObjects(self): # if dontMoveThisObject is passed, then dont allow it to move
 		for i in xrange(0, self.lengthTiles): #Need to use length and width tiles, because we're updating EVERYTHING, not just what's seen
 			for j in xrange(0, self.widthTiles):
 				self.grid[i][j].update()
 				if self.grid[i][j].object is not "empty": #Check each tile for an object
-					if dontMoveThisObject != None and dontMoveThisObject != self.grid[i][j].object.handle: # dont update this object if an object handle is passed and this object is not it
-						continue
 					if self.grid[i][j].objectCanMove() and self.grid[i][j].object.didMove is False: #See if it is can move and if it is their turn
 						self.grid[i][j].moveObject(self) #Then move it
-					elif not self.grid[i][j].objectCanMove(): #Structures
-						self.grid[i][j].object.update()
+						"""TODO update structures seperately"""
+						
+	def spawnMinion(self, team):
+		for i in xrange(0, self.lengthTiles):
+			for j in xrange(0, self.widthTiles):
+				if self.grid[i][j].object is not "empty":
+					if self.grid[i][j].object.handle is "spawner":
+						if self.grid[i][j].object.team == team:
+							self.grid[i][j].object.update()
 						
 				
 
@@ -144,7 +149,8 @@ class Tile:
 		if self.object is "empty":
 			pass
 		else:
-			self.object.update()
+			if self.object.handle is not "spawner":
+				self.object.update()
 		
 		if self.corpse is True:
 			self.corpseTicker += 1

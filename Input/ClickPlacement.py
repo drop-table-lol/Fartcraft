@@ -12,13 +12,12 @@ what they want to build.
 
 def calculateTile(xScroll, yScroll):
 	position = pygame.mouse.get_pos()
+	trueX = position[0] / Display.TILE_SIZE# + xScroll
+	trueY = position[1] / Display.TILE_SIZE# + yScroll
+	scrollX = position[0] / Display.TILE_SIZE + xScroll
+	scrollY = position[1] / Display.TILE_SIZE + yScroll
 	if position[1] < Display.SCREEN_LENGTH:
-		trueX = position[0] / Display.TILE_SIZE# + xScroll
-		trueY = position[1] / Display.TILE_SIZE# + yScroll
-		scrollX = position[0] / Display.TILE_SIZE + xScroll
-		scrollY = position[1] / Display.TILE_SIZE + yScroll
-
 		return (trueX, trueY, scrollX, scrollY)
 	else:
-		return -1
-		
+		return (position[0], position[1])
+	

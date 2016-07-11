@@ -41,7 +41,8 @@ class Spawner:
 		self.rect = pygame.Rect(self.screenX*Display.TILE_SIZE, self.screenY*Display.TILE_SIZE, self.size, self.size)
 
 	def update(self):
-		pass
+			self.spawnMinion()
+		
 		
 	def moved(self, bool):
 		pass
@@ -72,7 +73,7 @@ class Spawner:
 		
 	#COMBAT----------------------------------------------
 	def death(self):
-		print "SHITE, spawner down!"
+		print "oh no! spawner down!"
 		self.isDead = True
 		
 	def buff(self, x,y,z):
@@ -86,11 +87,11 @@ class Spawner:
 		
 	#SPAWNING--------------------------------------------
 	def spawnMinion(self):
-		if self.team is 0: #Red Demon
+		if self.team is 0: #Spawn to the right
 			print "team 1 spawns at %s, %s" % (self.x+1, self.y)
 			M = Minion.Minion(self.x+1, self.y, self.x-self.gridObj.scrollX+1, self.y+self.gridObj.scrollY, self.team)
 			self.gridObj.receiveObject(M)
-		elif self.team is 1: #Blue Demon
+		elif self.team is 1: #Spawn to the left
 			print "team 2 spawsn at %s, %s" % (self.x-1, self.y)
 			M = Minion.Minion(self.x-1, self.y, self.x-self.gridObj.scrollX-1, self.y+self.gridObj.scrollY, self.team)
 			self.gridObj.receiveObject(M)

@@ -10,11 +10,12 @@ from Structures import Wall
 
 class Input:
 
-	def __init__(self, screenObj, gridObj, heroObj):
+	def __init__(self, screenObj, gridObj, heroObj, playerTeam):
 	
 		self.screenObj = screenObj
 		self.gridObj = gridObj
 		self.heroObj = heroObj
+		self.playerTeam = playerTeam
 		self.xScroll = 0
 		self.yScroll = 0 	#These two vars should allow us to keep track of the number of scrolls,
 							#Allowing us to then pass the param to build-to-click stuff, 
@@ -56,12 +57,22 @@ class Input:
 					return True
 			if event.type == pygame.MOUSEBUTTONDOWN:
 				pos = ClickPlacement.calculateTile(self.xScroll, self.yScroll)
-				if pos is not -1:
+				if len(pos) is not 2:
 					if self.gridObj.grid[pos[2]][pos[3]].object is not "empty":
 						if self.gridObj.grid[pos[2]][pos[3]].object.handle is "wall":
 							self.gridObj.grid[pos[2]][pos[3]].object = "empty"
 					else:				
 						self.gridObj.receiveObject(Wall.Wall(pos[2], pos[3], pos[0], pos[1], 0))
+				elif len(pos) is 2:
+					print "pos 1 %s pos 2 %s " % (pos[0], pos[1])
+					if pos[0] < 192: #Attack
+						pass
+					elif pos[0] < 384: #Defend (change this to build?)
+						pass
+					elif pos[0] < 572: #Spawn Minion
+						self.gridObj.spawnMinion(self.playerTeam)
+					else:
+						pass #pass
 						
 	
 			
