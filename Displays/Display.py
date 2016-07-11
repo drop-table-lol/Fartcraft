@@ -31,7 +31,7 @@ pygame.init()
 FPS = 30 # Frames Per Second
 FPSCLOCK = pygame.time.Clock()
 
-CANVAS = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_LENGTH))
+CANVAS = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_LENGTH+200))
 
 
 class Screen:
@@ -43,7 +43,7 @@ class Screen:
 		self.gridObj = gridObj
 		
 	def update(self):
-		CANVAS.fill(GRASS_GREEN)
+		CANVAS.fill(BLACK)
 		self.gridObj.draw(self.x, self.y, self.x + self.width, self.y + self.height)
 	
 	def scroll(self, direction):

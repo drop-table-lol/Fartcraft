@@ -2,6 +2,7 @@
 
 import pygame
 from Displays import Display
+from Displays import Console
 from Grids import Grid
 from Input import Input
 from Player import Player
@@ -28,6 +29,7 @@ class Game:
 
 	def runGame(self):
 		#Pre-initializations
+		ConsoleObj = Console.Console() #For player input and commands not radial menu for now... ): 
 		gridObj = Grid.Grid()
 		screenObj = Display.Screen(gridObj)
 		Jdogg = Hero.Hero(1, 1, 1, 1, 0)
@@ -53,7 +55,7 @@ class Game:
 		
 		#Game Loop follows
 		screenObj.update()
-		pygame.display.update()
+		ConsoleObj.draw()
 		done = False
 		turns = 1
 		sac = Sprites.spr_cursor
@@ -65,6 +67,8 @@ class Game:
 			if ticker % 60 is 0:  # all things update. all things move
 				done = inputObj.update()
 				screenObj.update()
+				pygame.display.update()
+				ConsoleObj.draw()
 				gridObj.updateObjects()
 				done = inputObj.update()
 				gridObj.resetObjects()
@@ -74,6 +78,8 @@ class Game:
 			elif ticker % 30 is 0 : # all things update. all things move except minions
 				done = inputObj.update()
 				screenObj.update()
+				pygame.display.update()
+				ConsoleObj.draw()
 				gridObj.updateObjects("minion")
 				done = inputObj.update()
 				gridObj.resetObjects()
@@ -82,8 +88,13 @@ class Game:
 				Jdogg.draw()
 			else:					# only graphics update
 				screenObj.update()
+				ConsoleObj.draw()
+				pygame.display.update()
 				done = inputObj.update()
 				Jdogg.draw()
+									#If either of the spawners is dead, the game is over
+			if SlugSPW.isDead or CrabSpawner.isDead:
+				done = True
 				
 			#Cursor shit
 			cursor = pygame.mouse.get_pos()

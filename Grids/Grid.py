@@ -52,8 +52,7 @@ class Grid:
 					elif not self.grid[i][j].objectCanMove(): #Structures
 						self.grid[i][j].object.update()
 						
-				#######TODO #####
-				"""ADD Combat checks, as well as checks for vision and maybe towers/structures that don't move"""
+				
 
 						
 	"""Here we reset all moved objects to a non-moved state, so that they may move again next turn.
@@ -93,6 +92,7 @@ class Grid:
 			self.scrollY += 1
 		elif direction is "UP":
 			self.scrollY -= 1
+			"""TODO: add a scroll function for animations"""
 					
 					
 					

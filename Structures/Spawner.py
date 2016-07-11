@@ -4,7 +4,7 @@ import Sprites
 from Displays import Display
 from Minions import Minion
 
-BASE_HEALTH = 500
+BASE_HEALTH = 5
 
 class Spawner:
 	
@@ -41,9 +41,7 @@ class Spawner:
 		self.rect = pygame.Rect(self.screenX*Display.TILE_SIZE, self.screenY*Display.TILE_SIZE, self.size, self.size)
 
 	def update(self):
-		if self.turns % 9 is 0: #Every three seconds
-			self.spawnMinion()
-		self.turns += 1
+		pass
 		
 	def moved(self, bool):
 		pass
@@ -74,7 +72,7 @@ class Spawner:
 		
 	#COMBAT----------------------------------------------
 	def death(self):
-		print "oh no! spawner down!"
+		print "SHITE, spawner down!"
 		self.isDead = True
 		
 	def buff(self, x,y,z):
@@ -88,11 +86,11 @@ class Spawner:
 		
 	#SPAWNING--------------------------------------------
 	def spawnMinion(self):
-		if self.team is 0: #Spawn to the right
+		if self.team is 0: #Red Demon
 			print "team 1 spawns at %s, %s" % (self.x+1, self.y)
 			M = Minion.Minion(self.x+1, self.y, self.x-self.gridObj.scrollX+1, self.y+self.gridObj.scrollY, self.team)
 			self.gridObj.receiveObject(M)
-		elif self.team is 1: #Spawn to the left
+		elif self.team is 1: #Blue Demon
 			print "team 2 spawsn at %s, %s" % (self.x-1, self.y)
 			M = Minion.Minion(self.x-1, self.y, self.x-self.gridObj.scrollX-1, self.y+self.gridObj.scrollY, self.team)
 			self.gridObj.receiveObject(M)

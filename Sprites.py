@@ -42,7 +42,7 @@ spr_slug_left = pygame.transform.flip(spr_slug, True, False)
 
 #GUI-----------------------------------------------------------
 #Menu
-spr_menu = pygame.image.load('PNG'+ os.sep+'Menu.png')
+spr_console = pygame.image.load('PNG'+ os.sep+'Console.png')
 #SweetCursorofgoodness...
 spr_cursor = pygame.image.load('PNG'+os.sep+'Cursor.png')
 

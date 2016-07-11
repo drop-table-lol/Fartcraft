@@ -56,12 +56,13 @@ class Input:
 					return True
 			if event.type == pygame.MOUSEBUTTONDOWN:
 				pos = ClickPlacement.calculateTile(self.xScroll, self.yScroll)
-				if self.gridObj.grid[pos[2]][pos[3]].object is not "empty":
-					if self.gridObj.grid[pos[2]][pos[3]].object.handle is "wall":
-						self.gridObj.grid[pos[2]][pos[3]].object = "empty"
-				else:				
-					self.gridObj.receiveObject(Wall.Wall(pos[2], pos[3], pos[0], pos[1], 0))
-					
+				if pos is not -1:
+					if self.gridObj.grid[pos[2]][pos[3]].object is not "empty":
+						if self.gridObj.grid[pos[2]][pos[3]].object.handle is "wall":
+							self.gridObj.grid[pos[2]][pos[3]].object = "empty"
+					else:				
+						self.gridObj.receiveObject(Wall.Wall(pos[2], pos[3], pos[0], pos[1], 0))
+						
 	
 			
 		return False
