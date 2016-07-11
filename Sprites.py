@@ -43,6 +43,17 @@ spr_slug_left = pygame.transform.flip(spr_slug, True, False)
 #GUI-----------------------------------------------------------
 #Menu
 spr_console = pygame.image.load('PNG'+ os.sep+'Console.png')
+#Commands
+spr_attack = pygame.image.load('PNG'+ os.sep+'Attack.png')
+spr_defend = pygame.image.load('PNG'+ os.sep+'Defend.png')
+spr_spawnMinion = pygame.image.load('PNG'+ os.sep+'SpawnMinion.png')
+spr_pass = pygame.image.load('PNG'+ os.sep+'Pass.png')
+sprCommands = []
+sprCommands.append(spr_attack)
+sprCommands.append(spr_defend)
+sprCommands.append(spr_spawnMinion)
+sprCommands.append(spr_pass)
+
 #SweetCursorofgoodness...
 spr_cursor = pygame.image.load('PNG'+os.sep+'Cursor.png')
 
