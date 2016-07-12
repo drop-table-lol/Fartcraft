@@ -3,12 +3,13 @@ from Displays import Display
 import random
 import Sprites
 
-BASE_HEALTH = 1
-BASE_SPEED = 1
-BASE_ATTACKS = 1
-BASE_DAMAGE = 1
-BASE_DEFENSE = 1
-BASE_INITIATIVE = 1
+BASE_HEALTH = 5
+BASE_SPEED = 1 #Tiles per turn
+BASE_ATTACKS = 1 #Number of attacks per turn
+BASE_DAMAGE = 6 #number of d6 dice rolled per attack
+BASE_DEFENSE = 1 #number of BASE_ARMOR dice rolled per defense
+BASE_ARMOR = 2 #m sided dice is rolled for defense
+BASE_INITIATIVE = 1 #Determines who gets to go first
 class Minion:
 	
 	def __init__(self, x, y, scrollX, scrollY, team):
@@ -44,12 +45,13 @@ class Minion:
 		self.didMove = False
 		
 		#COMBAT------------------------------
-		self.health = 1
-		self.speed = 1
-		self.attacks = 1
-		self.damage = 1
-		self.defense = 1
-		self.initiative = 1
+		self.health = BASE_HEALTH
+		self.speed = BASE_SPEED
+		self.attacks = BASE_ATTACKS
+		self.damage = BASE_DAMAGE
+		self.defense = BASE_DEFENSE
+		self.initiative = BASE_INITIATIVE
+		self.armor = BASE_ARMOR
 		self.buffsActive = False #Is the minion currently under a buff (or debuff)?
 		self.turns = 0 #Increase this every turn, as a turn counter, useful for buffing and stuff per/turn
 		self.activeBuffs = [] #In case we get more than one...

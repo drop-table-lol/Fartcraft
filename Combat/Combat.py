@@ -4,6 +4,7 @@
 	have some sort of outcome (WOW, such specification... so, they may not die in one round of combat?"""
 
 import pygame
+import random
 import Sprites
 from Displays import Display
 from Animations import Animation
@@ -26,8 +27,8 @@ DEFENSE_DEBUFF = -1
 SPEED_BUFF = 1
 SPEED_DEBUFF = -1
 
-BUFF_TURNS = 4
-DEBUFF_TURNS = 4
+BUFF_TURNS = 3
+DEBUFF_TURNS = 3
 	
 	
 """Melee combat for units right next to each other. Need to develop a way to have combat between mixed types,
@@ -35,46 +36,46 @@ as well as two ranged units, though, two ranged units could use the same initiat
 ALSO, do buildings have initative? Do they autocast? Do they cost AP?"""
 def meleeCombat(attacker, defender, owner):
 	if not attacker.isDead:
-		if attacker.handle is "minion":
-			animType = "slash"
-		print "CHHARRRGE!!!!"
-		print "%s of clan %s is attacking %s of clan %s!" % (attacker.handle, attacker.team, defender.handle, defender.team)
+		print "MORTAL KOMBAT!!!!"
 		if attacker.initiative > 0: #Must not be recovering from debuff
 			if attacker.initiative+1 > defender.initiative: #Attacker gets an initiative bonus for forcing combat
-				if attacker.handle is "minion":
-					Animation.Animation(defender.x, defender.y, animType, owner)
-				defender.health -= attacker.damage
-				if not isDead(defender):
-					if defender.handle is "minion":
-						Animation.Animation(attacker.x, attacker.y, animType, owner)
-					elif defender.handle is "tower":
-						Animation.Animation(attacker.x, attacker.y, "arrows", owner)
-					attacker.health -= defender.damage
-					if isDead(attacker):
-						attacker.death()
-						defender.debuff("initiative", INITATIVE_DEBUFF, DEBUFF_TURNS)
-				else:
-					defender.death()
-					attacker.debuff("initiative", INITATIVE_DEBUFF, DEBUFF_TURNS)
-
-		elif defender.initiative >= attacker.initiative: #BUT, the defender wins ties...
-			if defender.handle is "minion":
-				Animation.Animation(attacker.x, attacker.y, animType, owner)
-			elif defender.handle is "tower":
-				Animation.Animation(attacker.x, attacker.y, "arrows", owner)
-			attacker.health -= defender.damage
-			if not isDead(attacker):
-				if attacker.handle is "minion":
-					Animation.Animation(defender.x, defender.y, animType, owner)
-				defender.health -= attacker.damage
-				if isDead(defender):
-					defender.death()
-					attacker.debuff("initiative", INITATIVE_DEBUFF, DEBUFF_TURNS)
-			else:
-				attacker.death()
-				defender.debuff("initiative", INITATIVE_DEBUFF, DEBUFF_TURNS)
+				first = attacker
+				second = defender
+		else:
+			first = defender
+			second = attacker
+			
+		animType = getAnim(first)		
+		damage = nDm(first.attacks, first.damage) - nDm(second.defense, second.armor)
+		if damage < 1:
+			damage = 1
+		print "%s of clan %s did %s damage to %s of clan %s!" % (first.handle, first.team, damage, second.handle, second.team)
+		second.health -= damage
+		Animation.Animation(second.x,second.y, animType, owner)
+		if isDead(second): #sad day, he died
+			second.death()
+			first.debuff("initiative", INITATIVE_DEBUFF, DEBUFF_TURNS)
+			animType = getCorpse(second)
+			Animation.Animation(second.x, second.y, animType, owner)
 			
 			
+		elif not isDead(second): #Do combat for number dos
+			animType = getAnim(second)		
+		damage = nDm(second.attacks, second.damage) - nDm(first.defense, first.armor)
+		if damage < 1:
+			damage = 1
+		print "%s of clan %s did %s damage to %s of clan %s!" % (second.handle, second.team, damage, first.handle, first.team)
+		first.health -= damage
+		Animation.Animation(first.x,first.y, animType, owner)
+		if isDead(first): #sad day, he died
+			first.death()
+			second.debuff("initiative", INITATIVE_DEBUFF, DEBUFF_TURNS)
+			animType = getCorpse(first)
+			Animation.Animation(first.x, first.y, animType, owner)
+			
+			
+				
+				
 def isDead(unit):
 	if unit.health <= 0:
 		return True
@@ -82,8 +83,25 @@ def isDead(unit):
 		return False
 		
 
-		#For melee combat, to show who gets attacked. Probably want arrows or spells too; and stuff for ranged combat
-
-		
-
+"""Allows us to roll n m sided dice. For things like attack, defense, etc. This way, different minions or heros 
+	can have different stats, and we can hand this function those stats and not worry about it."""
+def nDm(n, m = 6): 
+	sum = 0
+	for x in range (0, n):
+		sum += random.randint(0, m)
+	return sum
 	
+	
+"""Allows us to take in an attacker, we read their handle, then determine the correct type of animation to display"""
+def getAnim(attacker): 
+	if attacker.handle is "minion":
+		return "slash"
+	if attacker.handle is "tower":
+		return "arrows"
+		
+"""Just like getAnim, but for whoever died."""
+def getCorpse(deadGuy): 
+	if deadGuy.handle is "minion":
+		return "corpse"
+	if deadGuy.handle is "tower" or "wall":
+		return "rubble"

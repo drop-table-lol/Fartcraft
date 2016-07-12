@@ -19,6 +19,10 @@ class Animation:
 			self.sprite = Sprites.spr_slash
 		elif self.type is "arrows":
 			self.sprite = Sprites.spr_arrows
+		elif self.type is "corpse":
+			self.sprite = Sprites.spr_corpse
+		elif self.type is "rubble":
+			self.sprite = Sprites.spr_rubble
 		
 		
 	def draw(self):

@@ -76,7 +76,6 @@ class Grid:
 				if self.grid[i][j].object is not "empty": #Check each tile for an object	
 					if self.grid[i][j].object.isDead is True:
 						self.grid[i][j].object = "empty" #CLEAN up those nasty corpses before they get more nasty
-						self.grid[i][j].changeSprite(Sprites.spr_corpse)
 					
 
 				if self.grid[i][j].animation is not "empty":
@@ -113,8 +112,8 @@ class Grid:
 				
 				
 	def receiveAnim(self, anim):
-		if self.grid[anim.x][anim.y].animation is "empty":
-			self.grid[anim.x][anim.y].receiveAnim(anim)
+		#if self.grid[anim.x][anim.y].animation is "empty":
+		self.grid[anim.x][anim.y].receiveAnim(anim)
 			
 			
 					
@@ -131,8 +130,6 @@ class Tile:
 		self.text = pygame.font.SysFont("monospace", 12).render("(" + str(x) + "," + str(y) + ")", 1, (0,0,0))
 		self.object = "empty" #This will contain the unit, structure, or whatever that goes on this tile.
 		self.animation = "empty"
-		self.corpseTicker = 0 #So corpses clean up
-		self.corpse = False
 		self.ticker = 0
 		
 	
@@ -152,16 +149,6 @@ class Tile:
 			if self.object.handle is not "spawner":
 				self.object.update()
 		
-		if self.corpse is True:
-			self.corpseTicker += 1
-			if self.corpseTicker is 30: #one second has gone by
-				self.changeSprite(Sprites.GROUND_SPRITES[random.randint(0, len(Sprites.GROUND_SPRITES) - 1)]) #change it back
-				self.corpseTicker = 0
-				self.corpse = False
-				
-	def changeSprite(self, sprite):
-		self.sprite = sprite
-		self.corpse = True
 	
 	"""This eliminates reaching into other's lists, (interface),
 	as well as an ability for the map or others to spawn stuff"""

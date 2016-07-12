@@ -8,7 +8,6 @@ import pygame
 spr_ground1 = pygame.image.load('PNG'+ os.sep+'spr_ground1.png')
 spr_ground2 = pygame.image.load('PNG'+ os.sep+'spr_ground2.png')
 spr_ground3 = pygame.image.load('PNG'+ os.sep+'spr_ground3.png')
-spr_corpse = pygame.image.load('PNG'+ os.sep+'spr_corpse.png')
 GROUND_SPRITES = [spr_ground1, spr_ground2, spr_ground3]
 
 
@@ -57,7 +56,11 @@ sprCommands.append(spr_pass)
 #SweetCursorofgoodness...
 spr_cursor = pygame.image.load('PNG'+os.sep+'Cursor.png')
 
-
-#Attacks--------------------------------------------------------
+#ANIMATIONS--------------------------------------------------------
+#Attacks
 spr_slash = pygame.image.load('PNG'+os.sep+'spr_slash1.png')
 spr_arrows = pygame.image.load('PNG'+os.sep+'spr_arrows.png')
+
+#Corpses
+spr_corpse = pygame.image.load('PNG'+os.sep+'spr_corpse.png')
+spr_rubble = pygame.image.load('PNG'+os.sep+'rubble.png')

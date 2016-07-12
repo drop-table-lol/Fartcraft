@@ -63,8 +63,9 @@ class Game:
 		sac = Sprites.spr_cursor
 		ticker = 0
 		while not done:
-		
 			
+			if ticker % 120 is 0:
+				gridObj.spawnMinion(3) #Whatever currently isn't player team
 			
 			if ticker % 60 is 0:  # all things update. all things move
 				done = inputObj.update()
