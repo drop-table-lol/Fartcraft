@@ -41,7 +41,7 @@ def meleeCombat(attacker, defender, owner):
 			if attacker.initiative+1 > defender.initiative: #Attacker gets an initiative bonus for forcing combat
 				first = attacker
 				second = defender
-		else:
+		elif defender.initiative >= attacker.initiative+1:
 			first = defender
 			second = attacker
 			
@@ -64,7 +64,7 @@ def meleeCombat(attacker, defender, owner):
 		damage = nDm(second.attacks, second.damage) - nDm(first.defense, first.armor)
 		if damage < 1 and second.handle is not "wall":
 			damage = 1
-		else:
+		elif damage < 1 and second.handle is "wall":
 			damage = 0
 		print "%s of clan %s did %s damage to %s of clan %s!" % (second.handle, second.team, damage, first.handle, first.team)
 		first.health -= damage

@@ -28,7 +28,7 @@ class Animation:
 		
 		
 	def draw(self):
-		self.counter += 2
+		self.counter += 1
 		if self.counter < 30:
 			self.updateRect()
 			Display.CANVAS.blit(self.sprite, self.rect)

@@ -40,7 +40,7 @@ class Game:
 		
 		
 		#Actually Setting up the game
-		#DopeAssTower = Tower.Tower(0, 0, 0)
+		DopeAssTower = Tower.Tower(5, 0, 0)
 		
 		#SPW = Spawner.Spawner(0, 0, 0, gridObj)
 		SlugSPW = Spawner.Spawner(20, 0, 3, gridObj)
@@ -50,7 +50,7 @@ class Game:
 		gridObj.receiveObject(Jdogg)
 		gridObj.receiveObject(CrabSpawner)
 		
-		#gridObj.receiveObject(DopeAssTower)
+		gridObj.receiveObject(DopeAssTower)
 	
 		# list of objects
 		allObjects = ["minion", "hero","spawner", "tower", "wall"]
