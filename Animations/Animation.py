@@ -23,6 +23,8 @@ class Animation:
 			self.sprite = Sprites.spr_corpse
 		elif self.type is "rubble":
 			self.sprite = Sprites.spr_rubble
+		else:
+			self.sprite = Sprites.spr_corpse
 		
 		
 	def draw(self):

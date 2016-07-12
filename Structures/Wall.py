@@ -16,7 +16,15 @@ import pygame
 import Sprites
 from Displays import Display
 
-BASE_HEALTH = 10
+BASE_HEALTH = 8
+BASE_SPEED = 0 #Tiles per turn
+BASE_ATTACKS = 0 #Number of attacks per turn
+BASE_DAMAGE = 0 #number of d6 dice rolled per attack
+BASE_DEFENSE = 1 #number of BASE_ARMOR dice rolled per defense
+BASE_ARMOR = 3 #m sided dice is rolled for defense
+BASE_INITIATIVE = 0 #Determines who gets to go first
+"""TODO: Add a txt file or xml or whatever formatted file to have base stats for structures
+another one for minions, maybe one for heros, etc. This way, all of the BASE_CONSTS can be in one place"""
 
 class Wall:
 	
@@ -32,11 +40,12 @@ class Wall:
 		self.sprite = Sprites.spr_wall
 		
 		self.health = BASE_HEALTH
-		self.speed = 0
-		self.initiative = 0
-		self.defense = 1
-		self.attacks = 0
-		self.damage = 0
+		self.speed = BASE_SPEED
+		self.initiative = BASE_INITIATIVE
+		self.defense = BASE_DEFENSE
+		self.attacks = BASE_ATTACKS
+		self.damage = BASE_DAMAGE
+		self.armor = BASE_ARMOR
 		self.isDead = False
 		
 		

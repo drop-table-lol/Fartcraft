@@ -62,11 +62,14 @@ def meleeCombat(attacker, defender, owner):
 		elif not isDead(second): #Do combat for number dos
 			animType = getAnim(second)		
 		damage = nDm(second.attacks, second.damage) - nDm(first.defense, first.armor)
-		if damage < 1:
+		if damage < 1 and second.handle is not "wall":
 			damage = 1
+		else:
+			damage = 0
 		print "%s of clan %s did %s damage to %s of clan %s!" % (second.handle, second.team, damage, first.handle, first.team)
 		first.health -= damage
-		Animation.Animation(first.x,first.y, animType, owner)
+		if animType is not "empty":
+			Animation.Animation(first.x,first.y, animType, owner)
 		if isDead(first): #sad day, he died
 			first.death()
 			second.debuff("initiative", INITATIVE_DEBUFF, DEBUFF_TURNS)
@@ -96,8 +99,14 @@ def nDm(n, m = 6):
 def getAnim(attacker): 
 	if attacker.handle is "minion":
 		return "slash"
-	if attacker.handle is "tower":
+	elif attacker.handle is "tower":
 		return "arrows"
+	elif attacker.handle is "spawner":
+		return "arrows"
+	elif attacker.handle is "wall":
+		return "empty"
+	else:
+		return "slash"
 		
 """Just like getAnim, but for whoever died."""
 def getCorpse(deadGuy): 

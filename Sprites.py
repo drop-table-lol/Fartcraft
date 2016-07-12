@@ -32,10 +32,10 @@ spr_player = pygame.image.load('PNG'+ os.sep+'spr_player.png')
 spr_minion = pygame.image.load('PNG'+ os.sep+'spr_minion.png')
 spr_minion1 = pygame.image.load('PNG'+ os.sep+'spr_minion1.png')
 
-#CrabSpawn
+#Crabtopia
 spr_crab = pygame.image.load('PNG'+ os.sep+'CrabMinion0.png')
 spr_crab_left = pygame.transform.flip(spr_crab, True, False)
-#Sin Sity Slugs
+#Sin Sity Slugers
 spr_slug = pygame.image.load('PNG'+ os.sep+'SlugMinion0.png')
 spr_slug_left = pygame.transform.flip(spr_slug, True, False)
 
@@ -43,13 +43,13 @@ spr_slug_left = pygame.transform.flip(spr_slug, True, False)
 #Menu
 spr_console = pygame.image.load('PNG'+ os.sep+'Console.png')
 #Commands
+spr_build = pygame.image.load('PNG'+ os.sep+'Build.png')
 spr_attack = pygame.image.load('PNG'+ os.sep+'Attack.png')
-spr_defend = pygame.image.load('PNG'+ os.sep+'Defend.png')
 spr_spawnMinion = pygame.image.load('PNG'+ os.sep+'SpawnMinion.png')
 spr_pass = pygame.image.load('PNG'+ os.sep+'Pass.png')
 sprCommands = []
+sprCommands.append(spr_build)
 sprCommands.append(spr_attack)
-sprCommands.append(spr_defend)
 sprCommands.append(spr_spawnMinion)
 sprCommands.append(spr_pass)
 

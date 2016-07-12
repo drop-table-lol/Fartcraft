@@ -4,7 +4,13 @@ import Sprites
 from Displays import Display
 from Minions import Minion
 
-BASE_HEALTH = 5
+BASE_HEALTH = 10
+BASE_SPEED = 0 #Tiles per turn
+BASE_ATTACKS = 1 #Number of attacks per turn
+BASE_DAMAGE = 6 #number of d6 dice rolled per attack
+BASE_DEFENSE = 2 #number of BASE_ARMOR dice rolled per defense
+BASE_ARMOR = 3 #m sided dice is rolled for defense
+BASE_INITIATIVE = 1 #Determines who gets to go first
 
 class Spawner:
 	
@@ -22,11 +28,12 @@ class Spawner:
 		self.turns = 0
 		
 		self.health = BASE_HEALTH
-		self.speed = 0
-		self.initiative = 0
-		self.defense = 2
-		self.attacks = 0
-		self.damage = 0
+		self.speed = BASE_SPEED
+		self.initiative = BASE_INITIATIVE
+		self.defense = BASE_DEFENSE
+		self.attacks = BASE_ATTACKS
+		self.damage = BASE_DAMAGE
+		self.armor = BASE_ARMOR
 		self.isDead = False
 		
 		
